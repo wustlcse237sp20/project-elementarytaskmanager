@@ -15,17 +15,15 @@ class Tasks {
         this.taskAssignee = taskAssignee;
     }
 
-    public boolean addTask(String taskName) throws IOException {
+    public void addTask(String taskName) throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter(this.listOfTasks, true) //Set true for append mode
         );
         writer.newLine();
         writer.write(taskName);
         writer.close();
-        // TODO: return whether or not file was successfully added to
-        return false;
     }
 
-    public String[] processInput(String listOfNames) {
+    public static String[] processInput(String listOfNames) {
         String[] processedNames;
         //if (listOfNames.equals(".")) {
         // TODO: Add an option that can read names from the file of parent's students
@@ -45,16 +43,19 @@ class Tasks {
         System.out.println(
                 "Who would you like to assign this task to? Either type a name, a list of names separated by commas, or . for all");
         String taskAssignee = reader.readLine();
-        // TODO: Fix this depending on input to be for a list or all as well as just one kid
-        File taskFile = new File(taskAssignee + ".txt");
-        taskFile.createNewFile();
-        Tasks tasks = new Tasks(taskFile, taskAssignee);
-        boolean successAddingTask = tasks.addTask(taskName);
-        if (successAddingTask) {
-            System.out.println("Task " + taskName + " has been successfully added for " + taskAssignee);
-        } else {
-            System.out.println("Error: Task " + taskName + " was not added for " + taskAssignee);
+        String[] processedNames = processInput(taskAssignee);
+
+        for (int assigneeCounter = 0; assigneeCounter < processedNames.length; assigneeCounter++) {
+            File taskFile = new File(processedNames[assigneeCounter] + ".txt");
+            taskFile.createNewFile();
+            Tasks tasks = new Tasks(taskFile, processedNames[assigneeCounter]);
+            try {
+                tasks.addTask(taskName);
+                System.out.println(
+                        "Task " + taskName + " has been successfully added for " + processedNames[assigneeCounter]);
+            } catch (IOException e) {
+                System.out.println("Error: Task " + taskName + " was not added for " + processedNames[assigneeCounter]);
+            }
         }
-        // TODO: If addTask() returns true, give success message, else, give error message
     }
 }
