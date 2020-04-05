@@ -1,3 +1,4 @@
+package src;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -40,7 +41,7 @@ public class Teacher {
         BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
         String username = inputReader.readLine();
 
-        File userFile = new File("parentTeacherUsers.txt");
+        File userFile = new File("src/parentTeacherUsers.txt");
         BufferedReader fileReader = new BufferedReader(new FileReader(userFile));
         String fileUsername;
         boolean usernameAlreadyInFile = false;
@@ -71,7 +72,7 @@ public class Teacher {
             String[] processedNames = processInput(taskAssignee);
 
             for (int assigneeCounter = 0; assigneeCounter < processedNames.length; assigneeCounter++) {
-                File schedule = new File(processedNames[assigneeCounter] + ".txt");
+                File schedule = new File("src/" + processedNames[assigneeCounter] + ".txt");
                 schedule.createNewFile();
                 Student student = new Student(schedule, processedNames[assigneeCounter]);
                 try {
