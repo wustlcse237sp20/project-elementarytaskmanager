@@ -44,7 +44,7 @@ public class Student {
 		System.out.println("Please type your username and hit Enter to login to Elementary Task Manager");
 		BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
 		String username = inputReader.readLine();
-		File userFile = new File("src/parentTeacherUsers.txt").getAbsoluteFile();
+		File userFile = new File("./studentUsers.txt");
 		BufferedReader fileReader = new BufferedReader(new FileReader(userFile));
 		String fileUsername;
 		boolean usernameAlreadyInFile = false;
@@ -61,7 +61,7 @@ public class Student {
 			usernameWriter.write(username);
 			usernameWriter.close();
 		}
-		Student thisStudent = new Student(new File("src/" + username + ".txt"), username);
+		Student thisStudent = new Student(new File("./" + username + ".txt"), username);
 		System.out.println("Welcome, " + username + "! Type 'v' to view your tasks, , or 'q' to quit");
 		String userFirstChoice = inputReader.readLine();
 		if (userFirstChoice.equals("v")) {
