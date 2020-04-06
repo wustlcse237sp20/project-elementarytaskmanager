@@ -15,7 +15,7 @@ public class StudentTest {
 			
 			@Test
 			public void addSingleTask() throws Exception{
-				Student toAddTask = new Student(new File("toAddTask"), "toAddTask");
+				Student toAddTask = new Student("toAddTask");
 				Task toAdd = new Task("task1", "to-do");
 				toAddTask.addTask(toAdd);
 				BufferedReader reader = new BufferedReader(new FileReader(new File("toAddTask")));
