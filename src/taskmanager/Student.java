@@ -32,9 +32,7 @@ public class Student {
 		);
 		String task;
 		while ((task = reader.readLine()) != null) {	
-			//need to make Task, to be able to sort by category later
 			int divide = task.indexOf('-');
-//			String 
 			System.out.println(task);
 		}
 	}

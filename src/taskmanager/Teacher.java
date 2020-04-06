@@ -26,13 +26,9 @@ public class Teacher {
 
 	public static String[] processInput(String listOfNames) {
 		String[] processedNames;
-		// if (listOfNames.equals(".")) {
 		// TODO: Add an option that can read names from the file of parent's students
-		// }
 		// TODO: When do we check for valid input?
-		// else {
 		processedNames = listOfNames.split("\\s*,\\s*");
-		// }
 		return processedNames;
 	}
 
