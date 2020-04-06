@@ -26,7 +26,7 @@ public class Task {
 
 	@Override
 	public String toString() {
-		return name + "  " + category;
+		return name + " - " + category;
 	}
 	
 	
