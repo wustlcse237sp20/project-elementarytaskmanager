@@ -71,15 +71,9 @@ public class Teacher {
 			for (int assigneeCounter = 0; assigneeCounter < processedNames.length; assigneeCounter++) {
 				File schedule = new File("./" + processedNames[assigneeCounter] + ".txt");
 				schedule.createNewFile();
-				Student student = new Student(schedule, processedNames[assigneeCounter]);
-				try {
-					student.addTask(task);
-					System.out.println(
-							"Task " + taskName + " has been successfully added for " + processedNames[assigneeCounter]);
-				} catch (IOException e) {
-					System.out.println(
-							"Error: Task " + taskName + " was not added for " + processedNames[assigneeCounter]);
-				}
+				Student student = new Student(processedNames[assigneeCounter]);
+				student.addTask(task);
+				System.out.println("Task " + taskName + " has been successfully added for " + processedNames[assigneeCounter]);
 			}
 		} else if (userFirstChoice.equals("s")) {
 			// TODO: put add a student code here

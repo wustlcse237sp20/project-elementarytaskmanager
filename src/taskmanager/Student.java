@@ -4,35 +4,27 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 
 public class Student {
-	private File schedule;
-	private String name;
+	private Schedule schedule;
 
-	public Student(File schedule, String name) {
-		this.schedule = schedule;
-		this.name = name;
+	public Student(String name) {
+		this.schedule = new Schedule(name);
 	}
 
-	public void addTask(Task task) throws IOException {
-		BufferedWriter writer = new BufferedWriter(new FileWriter(this.schedule, true) // Set true for append mode
-		);
-		// need to not add new line for the first task
-		writer.newLine();
-		writer.write(task.toString());
-		writer.close();
+	public void addTask(Task task) {
+		schedule.writeTaskToFile(task);
 	}
 
-	public void viewTasks() throws IOException {
-		BufferedReader reader = new BufferedReader(new FileReader(this.schedule) // Set true for append mode
-		);
-		String task;
-		while ((task = reader.readLine()) != null) {	
-			int divide = task.indexOf('-');
+	public void viewTasks() {
+		List<Task> tasks = schedule.getTasks();
+		
+		for(Task task : tasks) {
 			System.out.println(task);
 		}
 	}
@@ -59,7 +51,7 @@ public class Student {
 			usernameWriter.write(username);
 			usernameWriter.close();
 		}
-		Student thisStudent = new Student(new File("./" + username + ".txt"), username);
+		Student thisStudent = new Student(username);
 		System.out.println("Welcome, " + username + "! Type 'v' to view your tasks, , or 'q' to quit");
 		String userFirstChoice = inputReader.readLine();
 		if (userFirstChoice.equals("v")) {
