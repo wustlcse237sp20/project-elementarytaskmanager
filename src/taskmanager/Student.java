@@ -1,13 +1,10 @@
 package taskmanager;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 
 public class Student {
 	private Schedule schedule;
@@ -48,34 +45,19 @@ public class Student {
 		// TODO: Create a file for the parent or teacher user upon login
 	}
 	
-	private static void addUserToRoster(String username) throws IOException {
+	private static void addUserToRoster(String username) {
 		File userFile = new File("./studentUsers.txt");
+		FileReaderHandler reader = new FileReaderHandler(userFile);
 		
-		boolean usernameAlreadyInFile = userExistsInFile(username, userFile);
+		boolean usernameAlreadyInFile = reader.containsLine(username);
 
 		if (!usernameAlreadyInFile) {
 			addUser(username, userFile);
 		}
 	}
 	
-	private static boolean userExistsInFile(String username, File userFile) throws IOException {
-		BufferedReader fileReader = new BufferedReader(new FileReader(userFile));
-
-		String fileUsername;
-		while ((fileUsername = fileReader.readLine()) != null) {
-			if (fileUsername.equals(username)) {
-				fileReader.close();
-				return true;
-			}
-		}
-		fileReader.close();
-		return false;
-	}
-	
-	private static void addUser(String username, File userFile) throws IOException {
-		BufferedWriter usernameWriter = new BufferedWriter(new FileWriter(userFile));
-		usernameWriter.newLine();
-		usernameWriter.write(username);
-		usernameWriter.close();
+	private static void addUser(String username, File userFile) {
+		FileWriterHandler usernameWriter = new FileWriterHandler(userFile);
+		usernameWriter.writeLine(username);
 	}
 }
