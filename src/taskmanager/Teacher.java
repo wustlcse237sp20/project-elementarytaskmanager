@@ -17,11 +17,9 @@ public class Teacher {
 		this.managedStudents = managedStudents;
 	}
 
-	public void addStudent(String studentName) throws IOException {
-		BufferedWriter writer = new BufferedWriter(new FileWriter(this.managedStudents, true));
-		writer.newLine();
-		writer.write(studentName);
-		writer.close();
+	public void addStudent(String studentName) {
+		FileWriterHandler writer = new FileWriterHandler(managedStudents);
+		writer.writeLine(studentName);
 	}
 
 	public static String[] processInput(String listOfNames) {
