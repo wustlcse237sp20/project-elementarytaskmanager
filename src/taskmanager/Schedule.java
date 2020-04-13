@@ -1,10 +1,7 @@
 package taskmanager;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -31,19 +28,12 @@ public class Schedule {
 	public List<Task> getTasks() {
 		List<Task> tasks = new LinkedList<Task>();
 		
-		try {
-			BufferedReader reader = new BufferedReader(new FileReader(this.file));
-			String line;
-			while ((line = reader.readLine()) != null) {
-				Task task = createTaskFromLine(line);
-				tasks.add(task);
-			}
-			reader.close();
-			
-		} catch (FileNotFoundException e) {
-			System.out.println("Could not find schedule file");
-		} catch (IOException e) {
-			System.out.println("Could not read tasks from file");
+		FileReaderHandler reader = new FileReaderHandler(file);
+		List<String> lines = reader.getLines();
+		
+		for(String line : lines) {
+			Task task = createTaskFromLine(line);
+			tasks.add(task);
 		}
 				
 		return tasks;
