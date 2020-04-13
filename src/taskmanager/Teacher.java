@@ -1,10 +1,7 @@
 package taskmanager;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -36,21 +33,12 @@ public class Teacher {
 		String username = inputReader.readLine();
 
 		File userFile = new File("./parentTeacherUsers.txt");
-		BufferedReader fileReader = new BufferedReader(new FileReader(userFile));
-		String fileUsername;
-		boolean usernameAlreadyInFile = false;
-		while ((fileUsername = fileReader.readLine()) != null) {
-			if (fileUsername.equals(username)) {
-				usernameAlreadyInFile = true;
-			}
-		}
-		fileReader.close();
+		FileReaderHandler reader = new FileReaderHandler(userFile);
+		boolean usernameAlreadyInFile = reader.containsLine(username);
 
 		if (!usernameAlreadyInFile) {
-			BufferedWriter usernameWriter = new BufferedWriter(new FileWriter(userFile));
-			usernameWriter.newLine();
-			usernameWriter.write(username);
-			usernameWriter.close();
+			FileWriterHandler writer = new FileWriterHandler(userFile);
+			writer.writeLine(username);
 		}
 
 		System.out.println("Welcome, " + username
