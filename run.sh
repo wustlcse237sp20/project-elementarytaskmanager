@@ -5,6 +5,7 @@ cd src
 javac ./taskmanager/Student.java
 javac ./taskmanager/Teacher.java
 javac ./taskmanager/Task.java
+javac ./taskmanager/Schedule.java
 javac ./taskmanager/FileReaderHandler.java
 
 echo "Are you a teacher? (y/n)"
@@ -21,3 +22,5 @@ rm ./taskmanager/Student.class
 rm ./taskmanager/Teacher.class
 rm ./taskmanager/Task.class
 rm ./taskmanager/FileReaderHandler.class
+rm ./taskmanager/Schedule.class
+

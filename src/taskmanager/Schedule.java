@@ -10,6 +10,10 @@ public class Schedule {
 	public Schedule(String name) {
 		this.file = new File("./" + name + ".txt");
 	}
+	
+	public File getFile() {
+		return file;
+	}
 
 	public void writeTaskToFile(Task task) {
 		String line = task.toString();
