@@ -11,7 +11,7 @@ public class Schedule {
 		this.file = new File("./students/" + name + ".txt");
 	}
 	
-	public void writeTaskToFile(Task task) {
+	public void addTask(Task task) {
 		String line = task.toString();
 		FileWriterHandler writer = new FileWriterHandler(file);
 		writer.writeLine(line);

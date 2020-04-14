@@ -16,7 +16,7 @@ public class Student {
 	}
 
 	public void addTask(Task task) {
-		schedule.writeTaskToFile(task);
+		schedule.addTask(task);
 	}
 
 	public void viewTasks() {
