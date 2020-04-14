@@ -22,6 +22,7 @@ public class FileWriterHandler {
 		try {
 			writer.write(line);
 			writer.newLine();
+			writer.close();
 		} catch (IOException e) {
 			System.out.println("Could not write '" + line + "' to file");
 		}

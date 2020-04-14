@@ -8,7 +8,7 @@ public class Schedule {
 	private File file;
 
 	public Schedule(String name) {
-		this.file = new File("./" + name + ".txt");
+		this.file = new File("./students/" + name + ".txt");
 	}
 	
 	public void writeTaskToFile(Task task) {

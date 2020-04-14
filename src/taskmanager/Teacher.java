@@ -55,7 +55,7 @@ public class Teacher {
 			String[] processedNames = processInput(taskAssignee);
 
 			for (int assigneeCounter = 0; assigneeCounter < processedNames.length; assigneeCounter++) {
-				File schedule = new File("./" + processedNames[assigneeCounter] + ".txt");
+				File schedule = new File("./students/" + processedNames[assigneeCounter] + ".txt");
 				schedule.createNewFile();
 				Student student = new Student(processedNames[assigneeCounter]);
 				student.addTask(task);

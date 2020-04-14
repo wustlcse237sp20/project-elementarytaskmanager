@@ -8,8 +8,10 @@ import java.io.File;
 
 public class Student {
 	private Schedule schedule;
-
+	String name;
+	
 	public Student(String name) {
+		this.name = name;
 		this.schedule = new Schedule(name);
 	}
 

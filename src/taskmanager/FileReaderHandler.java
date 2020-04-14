@@ -54,13 +54,13 @@ public class FileReaderHandler {
 			String line;
 			while ((line = reader.readLine()) != null) {
 				if (line.equals(lineToFind)) {
-					reader.close();
 					containsLine = true;
 				}
 			}
 			reader.close();
 		} catch (IOException e) {
 			System.out.println("Could not read file.");
+			e.printStackTrace();
 		}
 		
 		return containsLine;
