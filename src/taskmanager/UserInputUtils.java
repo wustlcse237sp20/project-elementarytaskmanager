@@ -6,8 +6,9 @@ import java.io.InputStreamReader;
 
 public class UserInputUtils {
 	public static String promptUser(String prompt) {
-		System.out.println("Please type your username and hit Enter to login to Elementary Task Manager");
+		System.out.println(prompt);
 		BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
+		
 		String response = null;
 		try {
 			response = inputReader.readLine();

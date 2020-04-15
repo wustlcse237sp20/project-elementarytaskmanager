@@ -26,7 +26,7 @@ public class Student {
 
 	public static void main(String[] args) {
 		String username = UserInputUtils.promptUser("Please type your username and hit Enter to login to Elementary Task Manager");
-		
+
 		addStudentToRoster(username);
 		
 		Student thisStudent = new Student(username);
@@ -47,6 +47,7 @@ public class Student {
 		if (!usernameAlreadyInFile) {
 			FileWriterHandler usernameWriter = new FileWriterHandler(userFile);
 			usernameWriter.writeLine(username);
+			System.out.println("User " + username + " created");
 		}
 	}
 }
