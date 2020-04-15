@@ -1,9 +1,7 @@
 package taskmanager;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 public class Teacher {
 	private String name;
@@ -27,10 +25,8 @@ public class Teacher {
 		return processedNames;
 	}
 
-	public static void main(String[] args) throws IOException {
-		System.out.println("Please type your username and hit Enter to login to Elementary Task Manager");
-		BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
-		String username = inputReader.readLine();
+	public static void main(String[] args) {
+		String username = UserInputUtils.promptUser("Please type your username and hit Enter to login to Elementary Task Manager");
 
 		File userFile = new File("./parentTeacherUsers.txt");
 		FileReaderHandler reader = new FileReaderHandler(userFile);
@@ -41,22 +37,24 @@ public class Teacher {
 			writer.writeLine(username);
 		}
 
-		System.out.println("Welcome, " + username
-				+ "! Type 's' to add a student to your caseload, 't' to add a task to a student schedule, or 'q' to quit");
-		String userFirstChoice = inputReader.readLine();
+		String userFirstChoice = UserInputUtils.promptUser("Welcome, " + username + "! Type 's' to add a student to your caseload, 't' to add a task to a student schedule, or 'q' to quit");
 
 		if (userFirstChoice.equals("t")) { 
-			System.out.println("Please enter the name of the task you would like to create");
-			String taskName = inputReader.readLine();
+			String taskName = UserInputUtils.promptUser("Please enter the name of the task you would like to create");
+			
 			Task task = new Task(taskName, "To do");
-			System.out.println(
-					"Who would you like to assign this task to? Either type a name, a list of names separated by commas, or . for all");
-			String taskAssignee = inputReader.readLine();
+
+			String taskAssignee = UserInputUtils.promptUser("Who would you like to assign this task to? Either type a name, a list of names separated by commas, or . for all");
 			String[] processedNames = processInput(taskAssignee);
 
 			for (int assigneeCounter = 0; assigneeCounter < processedNames.length; assigneeCounter++) {
 				File schedule = new File("./students/" + processedNames[assigneeCounter] + ".txt");
-				schedule.createNewFile();
+				try {
+					schedule.createNewFile();
+				} catch (IOException e) {
+					System.out.println("Couldn't create new file " + schedule);
+					e.printStackTrace();
+				}
 				Student student = new Student(processedNames[assigneeCounter]);
 				student.addTask(task);
 				System.out.println("Task " + taskName + " has been successfully added for " + processedNames[assigneeCounter]);
