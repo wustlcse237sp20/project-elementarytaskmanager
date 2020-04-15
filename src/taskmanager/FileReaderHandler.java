@@ -28,19 +28,42 @@ public class FileReaderHandler {
 		}
 	}
 	
+	
+	
+	
 	public List<String> getLines(){
 		List<String> lines = new LinkedList<String>();
 		
-		String line;
 		try {
+			String line;
 			while ((line = reader.readLine()) != null) {
 				lines.add(line);
 			}
+			reader.close();
 		} catch (IOException e) {
 			System.out.println("Could not read line from file.");
 		}
 		
 		return lines;
+	}
+	
+	public boolean containsLine(String lineToFind) {
+		boolean containsLine = false;
+		
+		try {
+			String line;
+			while ((line = reader.readLine()) != null) {
+				if (line.equals(lineToFind)) {
+					containsLine = true;
+				}
+			}
+			reader.close();
+		} catch (IOException e) {
+			System.out.println("Could not read file.");
+			e.printStackTrace();
+		}
+		
+		return containsLine;
 	}
 	
 }
