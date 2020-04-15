@@ -1,6 +1,7 @@
 package taskmanager;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -9,6 +10,12 @@ public class Schedule {
 
 	public Schedule(String name) {
 		this.file = new File("./students/" + name + ".txt");
+		try {
+			file.createNewFile();
+		} catch (IOException e) {
+			System.out.println("Couldn't create new file " + file);
+			e.printStackTrace();
+		}
 	}
 	
 	public void addTask(Task task) {
