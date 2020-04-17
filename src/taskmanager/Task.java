@@ -1,6 +1,12 @@
 package taskmanager;
 
 public class Task {
+	
+	enum categories {
+		ToDo,
+		InProgress,
+		Done
+	}
 	String name;
 	String category;
 	
