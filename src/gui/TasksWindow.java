@@ -20,9 +20,12 @@ public class TasksWindow {
 	private Controller controller;
 	static boolean isTeacher = false;
 	static String username;
-	DefaultListModel<Task> todosListModel;
-	DefaultListModel<Task> inprogressListModel;
-	DefaultListModel<Task> doneListModel;
+	private DefaultListModel<Task> toDoListModel;
+	private DefaultListModel<Task> inprogressListModel;
+	private DefaultListModel<Task> doneListModel;
+	private JList<Task> toDoList;
+	private JList<Task> inProgressList;
+	private JList<Task> doneList;
 
 	/**
 	 * Launch the application.
@@ -65,7 +68,7 @@ public class TasksWindow {
 			// TODO: initialze lists?
 		} else {
 			controller = new StudentController(username);
-			todosListModel = controller.getToDoTasks();
+			toDoListModel = controller.getToDoTasks();
 			inprogressListModel = controller.getInProgressTasks();
 			doneListModel = controller.getDoneTasks();
 		}
@@ -102,104 +105,75 @@ public class TasksWindow {
 				String nameString = (String) JOptionPane.showInputDialog(frame, "What is the task?", null);
 				if (nameString != null && (nameString.length() > 0)) {
 					Task task = controller.addTask(nameString);
-					todosListModel.addElement(task);
+					toDoListModel.addElement(task);
 				}
 			}
 		});
 	}
 	
 	private void createTaskLists() {
-		JList<Task> toDoList = new JList<Task>(todosListModel);
-		JList<Task> inProgressList = new JList<Task>(inprogressListModel);
-		JList<Task> doneList = new JList<Task>(doneListModel);
+		toDoList = new JList<Task>(toDoListModel);
+		inProgressList = new JList<Task>(inprogressListModel);
+		doneList = new JList<Task>(doneListModel);
 		
 		frame.getContentPane().add(toDoList, "cell 0 1 1 2,grow");
 		frame.getContentPane().add(inProgressList, "cell 1 1 1 2,grow");
 		frame.getContentPane().add(doneList, "cell 2 1 1 2,grow");
+		
 		toDoList.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent evt) {
-//				JList list = (JList) evt.getSource();
 				if (evt.getClickCount() == 2) {
-
 					int index = toDoList.locationToIndex(evt.getPoint());
-					String newCategory = updateTaskWindow();
-
-					Task task = todosListModel.get(index);
-					if (!task.getCategory().equals(newCategory)) {
-						task.setCategory(newCategory);
-						todosListModel.remove(index);
-						if (newCategory.equals("InProgress")) {
-							inprogressListModel.addElement(task);
-							inProgressList.setModel(inprogressListModel);
-						} else {
-							doneListModel.addElement(task);
-							doneList.setModel(doneListModel);
-						}
-
-						// TODO: make it save to student schedule
-					}
-
+					changeCategory(toDoListModel, index);
 				}
-			}
+			}			
 		});
+		
 		inProgressList.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent evt) {
-//				JList list = (JList) evt.getSource();
 				if (evt.getClickCount() == 2) {
-
 					int index = inProgressList.locationToIndex(evt.getPoint());
-					String newCategory = updateTaskWindow();
-
-					Task task = inprogressListModel.get(index);
-					if (!task.getCategory().equals(newCategory)) {
-						task.setCategory(newCategory);
-						inprogressListModel.remove(index);
-						if (newCategory.equals("ToDo")) {
-							todosListModel.addElement(task);
-							toDoList.setModel(todosListModel);
-						} else {
-							doneListModel.addElement(task);
-							doneList.setModel(doneListModel);
-						}
-
-						// TODO: make it save to student schedule
-					}
-
+					changeCategory(inprogressListModel, index);
 				}
 			}
 		});
+		
 		doneList.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent evt) {
-//				JList list = (JList) evt.getSource();
 				if (evt.getClickCount() == 2) {
-
 					int index = doneList.locationToIndex(evt.getPoint());
-					String newCategory = updateTaskWindow();
-
-					Task task = doneListModel.get(index);
-					if (!task.getCategory().equals(newCategory)) {
-						task.setCategory(newCategory);
-						doneListModel.remove(index);
-						if (newCategory.equals("InProgress")) {
-							inprogressListModel.addElement(task);
-							inProgressList.setModel(inprogressListModel);
-						} else {
-							todosListModel.addElement(task);
-							toDoList.setModel(todosListModel);
-						}
-
-						// TODO: make it save to student schedule
-					}
-
+					changeCategory(doneListModel, index);
 				}
 			}
 		});
 	}
 	
-	public String updateTaskWindow() {
+	private void changeCategory(DefaultListModel<Task> currentListModel, int index) {
+		Categories newCategory = updateTaskWindow();
+
+		Task task = currentListModel.get(index);
+		if (!task.getCategory().equals(newCategory)) {
+			task.setCategory(newCategory);
+			currentListModel.remove(index);
+			if (newCategory.equals(Categories.ToDo)) {
+				toDoListModel.addElement(task);
+				toDoList.setModel(toDoListModel);
+			} else if (newCategory.equals(Categories.InProgress)) {
+				inprogressListModel.addElement(task);
+				inProgressList.setModel(inprogressListModel);
+			} else {
+				doneListModel.addElement(task);
+				doneList.setModel(doneListModel);
+			}
+
+			// TODO: make it save to student schedule
+		}
+	}
+	
+	public Categories updateTaskWindow() {
 		Categories[] choices = Categories.values();
 		String newCategory = (String) JOptionPane.showInputDialog(null, "New category:", "Update",
 				JOptionPane.QUESTION_MESSAGE, null, Arrays.stream(choices).map(Categories::name).toArray(String[]::new), choices[0].name());
-		return newCategory;
+		return Categories.valueOf(newCategory);
 	}
 }
