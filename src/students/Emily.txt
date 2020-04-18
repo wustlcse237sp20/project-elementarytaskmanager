@@ -1,6 +1,3 @@
-task1 - To do
-task2 - To do
-task 3 - To do
-task4 - To do
-new task - To do
-lab - In progress
+task1       - ToDo
+new task GUI     - ToDo
+new task!! - Done
