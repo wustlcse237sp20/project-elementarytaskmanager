@@ -29,7 +29,7 @@ public class Student {
 	}
 	
 	public DefaultListModel<Task> getTasksByCategory(String category){
-		return schedule.getTasksByLisCategory(category);
+		return schedule.getTasksByListCategory(category);
 	}
 
 	public static void main(String[] args) {

@@ -11,7 +11,7 @@ public class Schedule {
 	private File file;
 
 	public Schedule(String name) {
-		this.file = new File("./src/students/" + name + ".txt");
+		this.file = new File("./src/students/" + name + ".txt");	//has to change path for the gui
 		try {
 			file.createNewFile();
 		} catch (IOException e) {
@@ -40,7 +40,7 @@ public class Schedule {
 		return tasks;
 	}
 
-	public DefaultListModel<Task> getTasksByLisCategory(String cat) {
+	public DefaultListModel<Task> getTasksByListCategory(String cat) {
 		DefaultListModel<Task> tasks = new DefaultListModel<Task>();
 
 		FileReaderHandler reader = new FileReaderHandler(file);
