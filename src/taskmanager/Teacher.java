@@ -42,7 +42,7 @@ public class Teacher {
 		if (userFirstChoice.equals("t")) { 
 			String taskName = UserInputUtils.promptUser("Please enter the name of the task you would like to create");
 			
-			Task task = new Task(taskName, "To do");
+			Task task = new Task(taskName);
 
 			String taskAssignee = UserInputUtils.promptUser("Who would you like to assign this task to? Either type a name, a list of names separated by commas, or . for all");
 			String[] processedNames = processInput(taskAssignee);

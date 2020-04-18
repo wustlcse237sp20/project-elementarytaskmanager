@@ -1,10 +1,7 @@
 package taskmanager;
 
-import java.util.LinkedList;
 import java.util.List;
-
 import javax.swing.DefaultListModel;
-
 import java.io.File;
 
 public class Student {
@@ -28,7 +25,7 @@ public class Student {
 		}
 	}
 	
-	public DefaultListModel<Task> getTasksByCategory(String category){
+	public DefaultListModel<Task> getTasksByCategory(Categories category){
 		return schedule.getTasksByListCategory(category);
 	}
 

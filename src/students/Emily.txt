@@ -1,6 +1,6 @@
-task1 - To do
-task2 - To do
-task 3 - To do
-task4 - To do
-new task - To do
-lab - In progress
+task1 - ToDo
+task2 - ToDo
+task 3 - ToDo
+new task - ToDo
+lab - InProgress
+task4 - ToDo

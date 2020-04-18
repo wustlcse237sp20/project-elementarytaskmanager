@@ -40,7 +40,7 @@ public class Schedule {
 		return tasks;
 	}
 
-	public DefaultListModel<Task> getTasksByListCategory(String cat) {
+	public DefaultListModel<Task> getTasksByListCategory(Categories category) {
 		DefaultListModel<Task> tasks = new DefaultListModel<Task>();
 
 		FileReaderHandler reader = new FileReaderHandler(file);
@@ -48,7 +48,7 @@ public class Schedule {
 		int index = 0;
 		for (String line : lines) {
 			Task task = createTaskFromLine(line);
-			if(task.category.equals(cat)) {
+			if(task.getCategory().equals(category)) {
 				tasks.add(index, task);
 				index++;
 			}
