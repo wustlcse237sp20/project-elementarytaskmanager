@@ -35,6 +35,12 @@ public class TeacherController implements Controller{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	@Override
+	public Task addTask(String name) {
+		return null;
+		// TODO Auto-generated method stub
+		
+	}
 
 	
 

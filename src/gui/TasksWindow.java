@@ -4,11 +4,13 @@ import java.awt.EventQueue;
 import taskmanager.*;
 
 import javax.swing.JFrame;
-
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
+
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
 
@@ -18,6 +20,9 @@ public class TasksWindow {
 	private Controller controller;
 	static boolean isTeacher = false;
 	static String username;
+	DefaultListModel<Task> todoList;
+	DefaultListModel<Task> inprogressList;
+	DefaultListModel<Task> doneList;
 
 	/**
 	 * Launch the application.
@@ -25,10 +30,11 @@ public class TasksWindow {
 	public static void main(String[] args) {
 
 		String teacher = UserInputUtils.promptUser("Hello! Are you are teacher? (y/n)");
-		if(teacher.equals("y")) {
+		if (teacher.equals("y")) {
 			isTeacher = true;
 		}
-		username = UserInputUtils.promptUser("Please type your username and hit Enter to login to Elementary Task Manager");
+		username = UserInputUtils
+				.promptUser("Please type your username and hit Enter to login to Elementary Task Manager");
 
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -59,15 +65,16 @@ public class TasksWindow {
 
 		if (isTeacher) {
 			controller = new TeacherController(username);
+			//TODO: initialze lists?
 		} else {
 			controller = new StudentController(username);
+			todoList = controller.getToDoTasks();
+			inprogressList = controller.getInProgressTasks();
+			doneList = controller.getDoneTasks();
 		}
 
 		JButton btnNewButton = new JButton("Add Task");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+
 		frame.getContentPane().setLayout(new MigLayout("", "[133px][133px][133px][right]", "[][243px]"));
 
 		JLabel lblNewLabel = new JLabel("To Do");
@@ -80,7 +87,7 @@ public class TasksWindow {
 		frame.getContentPane().add(lblNewLabel_2, "cell 2 0");
 		frame.getContentPane().add(btnNewButton, "cell 3 1,alignx right,aligny bottom");
 
-		JList<Task> toDoList = new JList<Task>(controller.getToDoTasks());
+		JList<Task> toDoList = new JList<Task>(todoList);
 		frame.getContentPane().add(toDoList, "cell 0 1,grow");
 
 		JList<Task> inProgressList = new JList<Task>(controller.getInProgressTasks());
@@ -88,5 +95,15 @@ public class TasksWindow {
 
 		JList<Task> doneList = new JList<Task>(controller.getDoneTasks());
 		frame.getContentPane().add(doneList, "cell 2 1,grow");
+
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String nameString = (String) JOptionPane.showInputDialog(frame, "What is the task?", null);
+				if (nameString != null && (nameString.length() > 0)) {
+					Task task = controller.addTask(nameString);
+					todoList.add(todoList.getSize(), task);
+				}
+			}
+		});
 	}
 }

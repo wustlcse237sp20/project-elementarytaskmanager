@@ -28,4 +28,11 @@ public class StudentController implements Controller{
 		return currentStudent.getTasksByCategory("Done");
 	}
 	
+	public Task addTask(String name) {
+		Task newTask = new Task(name, "To do");
+		currentStudent.addTask(newTask);
+		return newTask;
+//		currentStudent.getTasksByCategory("To do");
+	}
+	
 }
