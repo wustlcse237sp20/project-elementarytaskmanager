@@ -4,6 +4,7 @@ import java.io.File;
 
 import javax.swing.DefaultListModel;
 
+import taskmanager.Student;
 //import taskmanager.Student;
 import taskmanager.Task;
 import taskmanager.Teacher;
@@ -40,6 +41,11 @@ public class TeacherController implements Controller{
 		return null;
 		// TODO Auto-generated method stub
 		
+	}
+	@Override
+	public Student getStudent() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

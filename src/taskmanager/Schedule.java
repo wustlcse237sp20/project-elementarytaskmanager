@@ -9,6 +9,7 @@ import javax.swing.DefaultListModel;
 
 public class Schedule {
 	private File file;
+	List<Task> tasks;
 
 	public Schedule(String name) {
 		this.file = new File("./src/students/" + name + ".txt");	//has to change path for the gui
@@ -18,12 +19,29 @@ public class Schedule {
 			System.out.println("Couldn't create new file " + file);
 			e.printStackTrace();
 		}
+		
+		this.tasks = getTasks();
 	}
 
 	public void addTask(Task task) {
-		String line = task.toString();
+		tasks.add(task);
+	}
+	
+	public void writeTasks() {
 		FileWriterHandler writer = new FileWriterHandler(file);
-		writer.writeLine(line);
+		List<String> taskStrings = new LinkedList<>();
+		for(Task task : tasks) {
+			taskStrings.add(task.toString());
+		}
+		writer.writeLines(taskStrings);
+	}
+	
+	public void updateTask(Task newTask) {
+		for(Task task : tasks) {
+			if(task.getName().equals(newTask.getName())) {
+				task.setCategory(newTask.getCategory());
+			}
+		}
 	}
 
 	public List<Task> getTasks() {
@@ -40,7 +58,7 @@ public class Schedule {
 		return tasks;
 	}
 
-	public DefaultListModel<Task> getTasksByListCategory(String cat) {
+	public DefaultListModel<Task> getTasksByListCategory(Categories category) {
 		DefaultListModel<Task> tasks = new DefaultListModel<Task>();
 
 		FileReaderHandler reader = new FileReaderHandler(file);
@@ -48,7 +66,7 @@ public class Schedule {
 		int index = 0;
 		for (String line : lines) {
 			Task task = createTaskFromLine(line);
-			if(task.category.equals(cat)) {
+			if(task.getCategory().equals(category)) {
 				tasks.add(index, task);
 				index++;
 			}
