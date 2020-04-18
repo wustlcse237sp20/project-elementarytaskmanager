@@ -1,6 +1,10 @@
 package taskmanager;
 
+import java.util.LinkedList;
 import java.util.List;
+
+import javax.swing.DefaultListModel;
+
 import java.io.File;
 
 public class Student {
@@ -22,6 +26,10 @@ public class Student {
 		for(Task task : tasks) {
 			System.out.println(task);
 		}
+	}
+	
+	public DefaultListModel<Task> getTasksByCategory(String category){
+		return schedule.getTasksByListCategory(category);
 	}
 
 	public static void main(String[] args) {
