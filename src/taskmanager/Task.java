@@ -10,7 +10,7 @@ public class Task {
 	String name;
 	String category;
 	
-	public Task(String name, String category) {
+	public Task(String name, String category) {	//TODO: use the enum
 		this.name = name;
 		this.category = category;
 	}

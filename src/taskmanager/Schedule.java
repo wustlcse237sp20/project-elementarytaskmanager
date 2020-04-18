@@ -11,7 +11,7 @@ public class Schedule {
 	private File file;
 
 	public Schedule(String name) {
-		this.file = new File("./students/" + name + ".txt");
+		this.file = new File("./src/students/" + name + ".txt");
 		try {
 			file.createNewFile();
 		} catch (IOException e) {
@@ -60,7 +60,7 @@ public class Schedule {
 		int divide = line.indexOf('-');
 		if (divide > -1) {
 			String name = line.substring(0, divide);
-			String category = line.substring(divide + 1, line.length());
+			String category = line.substring(divide + 2, line.length());
 			Task task = new Task(name, category);
 			return task;
 		} else {
