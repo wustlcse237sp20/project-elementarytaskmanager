@@ -29,9 +29,18 @@ public class Schedule {
 	
 	public void writeTasks() {
 		FileWriterHandler writer = new FileWriterHandler(file);
+		List<String> taskStrings = new LinkedList<>();
 		for(Task task : tasks) {
-			String line = task.toString();
-			writer.writeLine(line);
+			taskStrings.add(task.toString());
+		}
+		writer.writeLines(taskStrings);
+	}
+	
+	public void updateTask(Task newTask) {
+		for(Task task : tasks) {
+			if(task.getName().equals(newTask.getName())) {
+				task.setCategory(newTask.getCategory());
+			}
 		}
 	}
 

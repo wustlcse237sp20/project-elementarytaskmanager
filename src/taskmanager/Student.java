@@ -33,6 +33,10 @@ public class Student {
 	public void saveSchedule() {
 		this.schedule.writeTasks();
 	}
+	
+	public void updateTask(Task task) {
+		this.schedule.updateTask(task);
+	}
 
 	public static void main(String[] args) {
 		String username = UserInputUtils.promptUser("Please type your username and hit Enter to login to Elementary Task Manager");

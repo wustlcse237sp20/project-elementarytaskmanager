@@ -1,1 +1,3 @@
-task1  - ToDo
+task1       - ToDo
+new task GUI     - ToDo
+new task!! - Done

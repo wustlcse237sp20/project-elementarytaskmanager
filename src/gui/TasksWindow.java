@@ -176,6 +176,8 @@ public class TasksWindow {
 			} else {
 				doneListModel.addElement(task);
 			}
+			
+			controller.getStudent().updateTask(task);
 						
 
 			// TODO: make it save to student schedule
