@@ -29,6 +29,10 @@ public class Student {
 	public DefaultListModel<Task> getTasksByCategory(Categories category){
 		return schedule.getTasksByListCategory(category);
 	}
+	
+	public void saveSchedule() {
+		this.schedule.writeTasks();
+	}
 
 	public static void main(String[] args) {
 		String username = UserInputUtils.promptUser("Please type your username and hit Enter to login to Elementary Task Manager");

@@ -1,5 +1,5 @@
 package gui;
-
+import taskmanager.*;
 
 import javax.swing.DefaultListModel;
 
@@ -10,4 +10,5 @@ public interface Controller {
 	public DefaultListModel<Task> getInProgressTasks();
 	public DefaultListModel<Task> getDoneTasks();
 	public Task addTask(String name);
+	public Student getStudent();
 }

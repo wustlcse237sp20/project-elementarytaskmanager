@@ -1,7 +1,1 @@
-task1 - ToDo
-task2 - ToDo
-task 3 - ToDo
-new task - ToDo
-lab - InProgress
-task4 - ToDo
-task from GUI - ToDo
+task1  - ToDo

@@ -26,6 +26,7 @@ public class TasksWindow {
 	private JList<Task> toDoList;
 	private JList<Task> inProgressList;
 	private JList<Task> doneList;
+	private JButton saveButton;
 
 	/**
 	 * Launch the application.
@@ -76,13 +77,14 @@ public class TasksWindow {
 		initializeGUIElements();
 		createAddTaskButton();		
 		createTaskLists();
+		saveChanges();
 	}
 
 	private void initializeFrame() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new MigLayout("", "[133px][133px][133px][right]", "[][243px][]"));
+		frame.getContentPane().setLayout(new MigLayout("", "[133px][133px][133px][right]", "[][243px][][]"));
 	}
 	
 	private void initializeGUIElements() {
@@ -111,14 +113,26 @@ public class TasksWindow {
 		});
 	}
 	
+	private void saveChanges() {
+		saveButton = new JButton("Save");
+		frame.getContentPane().add(saveButton, "cell 3 3");
+		saveButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.getStudent().saveSchedule();
+			}
+		});
+	}
+	
 	private void createTaskLists() {
 		toDoList = new JList<Task>(toDoListModel);
 		inProgressList = new JList<Task>(inprogressListModel);
 		doneList = new JList<Task>(doneListModel);
 		
-		frame.getContentPane().add(toDoList, "cell 0 1 1 2,grow");
-		frame.getContentPane().add(inProgressList, "cell 1 1 1 2,grow");
-		frame.getContentPane().add(doneList, "cell 2 1 1 2,grow");
+		frame.getContentPane().add(toDoList, "cell 0 1 1 3,grow");
+		frame.getContentPane().add(inProgressList, "cell 1 1 1 3,grow");
+		frame.getContentPane().add(doneList, "cell 2 1 1 3,grow");
+		
+		
 		
 		toDoList.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent evt) {
