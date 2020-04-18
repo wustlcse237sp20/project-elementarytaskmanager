@@ -5,10 +5,14 @@ import javax.swing.DefaultListModel;
 import taskmanager.*;
 
 public class StudentController implements Controller{
-	Student currentStudent;
+	private Student currentStudent;
 	
 	public StudentController(String name) {
 		this.currentStudent = new Student(name);
+	}
+	
+	public Student getStudent() {
+		return currentStudent;
 	}
 
 	@Override

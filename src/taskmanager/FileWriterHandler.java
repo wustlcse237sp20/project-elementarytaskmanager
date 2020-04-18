@@ -10,7 +10,7 @@ public class FileWriterHandler {
 	
 	public FileWriterHandler(File file) {
 		try {
-			this.writer = new BufferedWriter(new FileWriter(file, true));	// Set true for append mode
+			this.writer = new BufferedWriter(new FileWriter(file));	// Set true for append mode
 		} catch (IOException e) {
 			System.out.println("Could not find file " + file);
 		}

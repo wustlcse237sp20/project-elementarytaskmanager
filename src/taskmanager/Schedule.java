@@ -9,6 +9,7 @@ import javax.swing.DefaultListModel;
 
 public class Schedule {
 	private File file;
+	List<Task> tasks;
 
 	public Schedule(String name) {
 		this.file = new File("./src/students/" + name + ".txt");	//has to change path for the gui
@@ -18,12 +19,20 @@ public class Schedule {
 			System.out.println("Couldn't create new file " + file);
 			e.printStackTrace();
 		}
+		
+		this.tasks = getTasks();
 	}
 
 	public void addTask(Task task) {
-		String line = task.toString();
+		tasks.add(task);
+	}
+	
+	public void writeTasks() {
 		FileWriterHandler writer = new FileWriterHandler(file);
-		writer.writeLine(line);
+		for(Task task : tasks) {
+			String line = task.toString();
+			writer.writeLine(line);
+		}
 	}
 
 	public List<Task> getTasks() {

@@ -157,14 +157,12 @@ public class TasksWindow {
 			currentListModel.remove(index);
 			if (newCategory.equals(Categories.ToDo)) {
 				toDoListModel.addElement(task);
-				toDoList.setModel(toDoListModel);
 			} else if (newCategory.equals(Categories.InProgress)) {
 				inprogressListModel.addElement(task);
-				inProgressList.setModel(inprogressListModel);
 			} else {
 				doneListModel.addElement(task);
-				doneList.setModel(doneListModel);
 			}
+						
 
 			// TODO: make it save to student schedule
 		}
