@@ -2,14 +2,22 @@ package taskmanager;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Teacher {
 	private String name;
 	private File managedStudents;
 
-	public Teacher(String name, File managedStudents) {
+	public Teacher(String name) {
 		this.name = name;
-		this.managedStudents = managedStudents;
+		this.managedStudents = new File("./src/teachers/" + name + ".txt"); //has to change path for the gui
+		try {
+			managedStudents.createNewFile();
+		} catch (IOException e) {
+			System.out.println("Couldn't create new file " + managedStudents);
+			e.printStackTrace();
+		}
 	}
 
 	public void addStudent(String studentName) {
@@ -17,50 +25,66 @@ public class Teacher {
 		writer.writeLine(studentName);
 	}
 
-	public static String[] processInput(String listOfNames) {
-		String[] processedNames;
-		// TODO: Add an option that can read names from the file of parent's students
-		// TODO: When do we check for valid input?
-		processedNames = listOfNames.split("\\s*,\\s*");
+	public List<String> processInput(String listOfNames) {
+		List<String> processedNames;
+		if (listOfNames.equals(".")) {
+			listOfNames = "";
+			FileReaderHandler reader = new FileReaderHandler(managedStudents);
+			processedNames = reader.getLines();
+		} else {
+			String[] tempProcessedNames = listOfNames.split("\\s*,\\s*");
+			processedNames = new LinkedList<String>();
+			for (String name : tempProcessedNames) {
+				processedNames.add(name);
+			}
+		}
 		return processedNames;
 	}
 
-	public static void main(String[] args) {
-		String username = UserInputUtils.promptUser("Please type your username and hit Enter to login to Elementary Task Manager");
+	public void assignTask(Task task, List<String> studentNames) {
+		for (int studentCounter = 0; studentCounter < studentNames.size(); studentCounter++) {
+			Student student = new Student(studentNames.get(studentCounter));
+			student.addTask(task);
+			System.out.println(
+					"Task " + task.getName() + " has been successfully added for " + studentNames.get(studentCounter));
+		}
+	}
 
+	public static void login(String teacherName) {
 		File userFile = new File("./parentTeacherUsers.txt");
 		FileReaderHandler reader = new FileReaderHandler(userFile);
-		boolean usernameAlreadyInFile = reader.containsLine(username);
+		boolean usernameAlreadyInFile = reader.containsLine(teacherName);
 
 		if (!usernameAlreadyInFile) {
 			FileWriterHandler writer = new FileWriterHandler(userFile);
-			writer.writeLine(username);
+			writer.writeLine(teacherName);
 		}
+	}
 
-		String userFirstChoice = UserInputUtils.promptUser("Welcome, " + username + "! Type 's' to add a student to your caseload, 't' to add a task to a student schedule, or 'q' to quit");
+	public static void main(String[] args) {
+		String username = UserInputUtils
+				.promptUser("Please type your username and hit Enter to login to Elementary Task Manager");
 
-		if (userFirstChoice.equals("t")) { 
+		login(username);
+		Teacher teacher = new Teacher(username);
+
+		String userFirstChoice = UserInputUtils.promptUser("Welcome, " + username
+				+ "! Type 's' to add a student to your caseload, 't' to add a task to a student schedule, or 'q' to quit");
+
+		if (userFirstChoice.equals("t")) {
 			String taskName = UserInputUtils.promptUser("Please enter the name of the task you would like to create");
-			
+
 			Task task = new Task(taskName);
 
-			String taskAssignee = UserInputUtils.promptUser("Who would you like to assign this task to? Either type a name, a list of names separated by commas, or . for all");
-			String[] processedNames = processInput(taskAssignee);
+			String taskAssignee = UserInputUtils.promptUser(
+					"Who would you like to assign this task to? Either type a name, a list of names separated by commas, or . for all");
+			List<String> processedNames = teacher.processInput(taskAssignee);
+			teacher.assignTask(task, processedNames);
 
-			for (int assigneeCounter = 0; assigneeCounter < processedNames.length; assigneeCounter++) {
-				File schedule = new File("./students/" + processedNames[assigneeCounter] + ".txt");
-				try {
-					schedule.createNewFile();
-				} catch (IOException e) {
-					System.out.println("Couldn't create new file " + schedule);
-					e.printStackTrace();
-				}
-				Student student = new Student(processedNames[assigneeCounter]);
-				student.addTask(task);
-				System.out.println("Task " + taskName + " has been successfully added for " + processedNames[assigneeCounter]);
-			}
 		} else if (userFirstChoice.equals("s")) {
-			// TODO: put add a student code here
+			String studentName = UserInputUtils
+					.promptUser("Please enter the name of the student you would like to add to your caseload");
+			teacher.addStudent(studentName);
 		} else if (userFirstChoice.equals("q")) {
 			return;
 		} else {
