@@ -13,6 +13,10 @@ public class Student {
 		this.name = name;
 		this.schedule = new Schedule(name);
 	}
+	
+	public Schedule getSchedule() {
+		return this.schedule;
+	}
 
 	public void addTask(Task task) {
 		schedule.addTask(task);

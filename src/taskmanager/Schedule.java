@@ -77,7 +77,7 @@ public class Schedule {
 	private Task createTaskFromLine(String line) {
 		int divide = line.indexOf('-');
 		if (divide > -1) {
-			String name = line.substring(0, divide);
+			String name = line.substring(0, divide - 1);
 			String category = line.substring(divide + 2, line.length());
 			Task task = new Task(name, category);
 			return task;
