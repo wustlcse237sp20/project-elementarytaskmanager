@@ -20,11 +20,20 @@ public class Teacher {
 		}
 	}
 
+	/**
+	 * adds a student to the list of students the teacher manages
+	 * @param studentName name of student to add
+	 */
 	public void addStudent(String studentName) {
 		FileWriterHandler writer = new FileWriterHandler(managedStudents);
 		writer.writeLine(studentName);
 	}
 
+	/**
+	 * if the teacher enters a list of names for a task, this will process them
+	 * @param listOfNames full teacher entry
+	 * @return list of the separated names
+	 */
 	public List<String> processInput(String listOfNames) {
 		List<String> processedNames;
 		if (listOfNames.equals(".")) {
@@ -41,6 +50,11 @@ public class Teacher {
 		return processedNames;
 	}
 
+	/**
+	 * assigns a task to given students
+	 * @param task task to be assigned 
+	 * @param studentNames list of students to add task to
+	 */
 	public void assignTask(Task task, List<String> studentNames) {
 		for (int studentCounter = 0; studentCounter < studentNames.size(); studentCounter++) {
 			Student student = new Student(studentNames.get(studentCounter));
@@ -50,6 +64,10 @@ public class Teacher {
 		}
 	}
 
+	/**
+	 * processes login for teachers
+	 * @param teacherName name of teacher wanting to login
+	 */
 	public static void login(String teacherName) {
 		File userFile = new File("./parentTeacherUsers.txt");
 		FileReaderHandler reader = new FileReaderHandler(userFile);

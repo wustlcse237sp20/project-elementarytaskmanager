@@ -27,6 +27,9 @@ public class Schedule {
 		tasks.add(task);
 	}
 	
+	/**
+	 * used when ending the program to write the current status of the tasks to the schedule file
+	 */
 	public void writeTasks() {
 		FileWriterHandler writer = new FileWriterHandler(file);
 		List<String> taskStrings = new LinkedList<>();
@@ -36,6 +39,10 @@ public class Schedule {
 		writer.writeLines(taskStrings);
 	}
 	
+	/**
+	 * updates a current task in the list
+	 * @param newTask updated task to add
+	 */
 	public void updateTask(Task newTask) {
 		for(Task task : tasks) {
 			if(task.getName().equals(newTask.getName())) {
@@ -44,6 +51,10 @@ public class Schedule {
 		}
 	}
 
+	/**
+	 * returns the list of tasks in the schedule
+	 * @return list of tasks
+	 */
 	public List<Task> getTasks() {
 		List<Task> tasks = new LinkedList<Task>();
 
@@ -58,6 +69,11 @@ public class Schedule {
 		return tasks;
 	}
 
+	/**
+	 * used by the gui to return tasks by specific category
+	 * @param category desired category of tasks
+	 * @return default list model of tasks
+	 */
 	public DefaultListModel<Task> getTasksByListCategory(Categories category) {
 		DefaultListModel<Task> tasks = new DefaultListModel<Task>();
 
@@ -74,6 +90,11 @@ public class Schedule {
 		return tasks;
 	}
 
+	/**
+	 * parses line from schedule file and creates a task from it
+	 * @param line line from file
+	 * @return newly created task
+	 */
 	private Task createTaskFromLine(String line) {
 		int divide = line.indexOf('-');
 		if (divide > -1) {

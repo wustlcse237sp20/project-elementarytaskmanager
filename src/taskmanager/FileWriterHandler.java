@@ -17,6 +17,10 @@ public class FileWriterHandler {
 		}
 	}
 
+	/**
+	 * writes a single line to the file
+	 * @param line line to add
+	 */
 	public void writeLine(String line) {
 		try {
 			writer.write(line);
@@ -27,6 +31,10 @@ public class FileWriterHandler {
 		}
 	}
 
+	/**
+	 * writes multiple lines to the file
+	 * @param lines list of strings (lines) to add
+	 */
 	public void writeLines(List<String> lines) {
 		for (String line : lines) {
 			try {
