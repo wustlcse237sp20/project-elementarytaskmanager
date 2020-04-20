@@ -30,7 +30,10 @@ public class FileReaderHandler {
 	
 	
 	
-	
+	/**
+	 * gets all lines from a file
+	 * @return list of each line as a string
+	 */
 	public List<String> getLines(){
 		List<String> lines = new LinkedList<String>();
 		
@@ -47,6 +50,11 @@ public class FileReaderHandler {
 		return lines;
 	}
 	
+	/**
+	 * determines if a file contains a particular line
+	 * @param lineToFind desired line
+	 * @return boolean true if contains line, false otherwise
+	 */
 	public boolean containsLine(String lineToFind) {
 		boolean containsLine = false;
 		
