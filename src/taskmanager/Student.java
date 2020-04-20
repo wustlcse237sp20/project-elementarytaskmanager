@@ -8,7 +8,7 @@ import java.io.File;
 public class Student {
 	private Schedule schedule;
 	String name;
-	
+
 	public Student(String name) {
 		this.name = name;
 		this.schedule = new Schedule(name);
@@ -24,42 +24,43 @@ public class Student {
 
 	public void viewTasks() {
 		List<Task> tasks = schedule.getTasks();
-		
-		for(Task task : tasks) {
+
+		for (Task task : tasks) {
 			System.out.println(task);
 		}
 	}
-	
-	public DefaultListModel<Task> getTasksByCategory(Categories category){
+
+	public DefaultListModel<Task> getTasksByCategory(Categories category) {
 		return schedule.getTasksByListCategory(category);
 	}
-	
+
 	public void saveSchedule() {
 		this.schedule.writeTasks();
 	}
-	
+
 	public void updateTask(Task task) {
 		this.schedule.updateTask(task);
 	}
 
 	public static void main(String[] args) {
-		String username = UserInputUtils.promptUser("Please type your username and hit Enter to login to Elementary Task Manager");
+		String username = UserInputUtils
+				.promptUser("Please type your username and hit Enter to login to Elementary Task Manager");
 
 		addStudentToRoster(username);
-		
+
 		Student thisStudent = new Student(username);
-		String userFirstChoice = UserInputUtils.promptUser("Welcome, " + username + "! Type 'v' to view your tasks, , or 'q' to quit");
+		String userFirstChoice = UserInputUtils
+				.promptUser("Welcome, " + username + "! Type 'v' to view your tasks, , or 'q' to quit");
 
 		if (userFirstChoice.equals("v")) {
 			thisStudent.viewTasks();
 		}
-		// TODO: Create a file for the parent or teacher user upon login
 	}
-	
+
 	private static void addStudentToRoster(String username) {
 		File userFile = new File("./studentUsers.txt");
 		FileReaderHandler reader = new FileReaderHandler(userFile);
-		
+
 		boolean usernameAlreadyInFile = reader.containsLine(username);
 
 		if (!usernameAlreadyInFile) {
