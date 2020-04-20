@@ -17,7 +17,7 @@ public class TeacherController implements Controller{
 		this.username = name;
 		//TODO: fix this file part
 		File userFile = new File("./parentTeacherUsers.txt");
-		this.currentTeacher = new Teacher(name, userFile);
+		this.currentTeacher = new Teacher(name);
 	}
 	@Override
 	public DefaultListModel<Task> getToDoTasks() {

@@ -12,7 +12,7 @@ public class Schedule {
 	List<Task> tasks;
 
 	public Schedule(String name) {
-		this.file = new File("./src/students/" + name + ".txt");	//has to change path for the gui
+		this.file = new File("./students/" + name + ".txt");	//has to change path for the gui
 		try {
 			file.createNewFile();
 		} catch (IOException e) {
