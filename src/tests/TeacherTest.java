@@ -13,7 +13,7 @@ import taskmanager.Task;
 
 public class TeacherTest {
 
-    Teacher ronCytron = new Teacher("Ron cytron", new File("RonCytronStudents.txt"));
+    Teacher ronCytron = new Teacher("Ron cytron");
 
     @Test
     public void addSingleStudent() throws Exception {
