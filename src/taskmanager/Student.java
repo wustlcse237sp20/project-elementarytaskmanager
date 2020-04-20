@@ -17,11 +17,17 @@ public class Student {
 	public Schedule getSchedule() {
 		return this.schedule;
 	}
-
+	/**
+	 * adds a single task to the student's schedule
+	 * @param task the task to add
+	 */
 	public void addTask(Task task) {
 		schedule.addTask(task);
 	}
 
+	/**
+	 * prints out each task on a new line
+	 */
 	public void viewTasks() {
 		List<Task> tasks = schedule.getTasks();
 
@@ -30,14 +36,26 @@ public class Student {
 		}
 	}
 
+	/**
+	 * used by the gui to return tasks in a particular category
+	 * @param category the desired category 
+	 * @return a default list model of those tasks
+	 */
 	public DefaultListModel<Task> getTasksByCategory(Categories category) {
 		return schedule.getTasksByListCategory(category);
 	}
 
+	/**
+	 * writes the current list of tasks to the schedule
+	 */
 	public void saveSchedule() {
 		this.schedule.writeTasks();
 	}
 
+	/**
+	 * updates the task with the same name as the param
+	 * @param task the updated task
+	 */
 	public void updateTask(Task task) {
 		this.schedule.updateTask(task);
 	}
@@ -57,6 +75,10 @@ public class Student {
 		}
 	}
 
+	/**
+	 * adds this student to the text file roster of students
+	 * @param username name of student to add
+	 */
 	private static void addStudentToRoster(String username) {
 		File userFile = new File("./studentUsers.txt");
 		FileReaderHandler reader = new FileReaderHandler(userFile);
