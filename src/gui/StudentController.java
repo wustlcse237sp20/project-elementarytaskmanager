@@ -35,5 +35,11 @@ public class StudentController implements Controller{
 		currentStudent.addTask(newTask);
 		return newTask;
 	}
+
+	@Override
+	public DefaultListModel<Student> getStudents() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }
