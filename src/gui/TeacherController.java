@@ -1,6 +1,6 @@
 package gui;
 
-import java.io.File;
+//import java.io.File;
 
 import javax.swing.DefaultListModel;
 
@@ -15,26 +15,32 @@ public class TeacherController implements Controller{
 	
 	public TeacherController(String name) {
 		this.username = name;
-		//TODO: fix this file part
-		File userFile = new File("./parentTeacherUsers.txt");
 		this.currentTeacher = new Teacher(name);
+		//TODO: login teacher method???
+		
 	}
 	@Override
 	public DefaultListModel<Task> getToDoTasks() {
 		// TODO Auto-generated method stub
-		return null;
+		DefaultListModel<Task> listModel = new DefaultListModel<Task>();
+		listModel.addElement(new Task("test"));
+		return listModel;
 	}
 
 	@Override
 	public DefaultListModel<Task> getInProgressTasks() {
 		// TODO Auto-generated method stub
-		return null;
+		DefaultListModel<Task> listModel = new DefaultListModel<Task>();
+		listModel.addElement(new Task("test"));
+		return listModel;
 	}
 
 	@Override
 	public DefaultListModel<Task> getDoneTasks() {
 		// TODO Auto-generated method stub
-		return null;
+		DefaultListModel<Task> listModel = new DefaultListModel<Task>();
+		listModel.addElement(new Task("test"));
+		return listModel;
 	}
 	@Override
 	public Task addTask(String name) {
@@ -46,6 +52,11 @@ public class TeacherController implements Controller{
 	public Student getStudent() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	@Override
+	public DefaultListModel<Student> getStudents() {
+		// TODO Auto-generated method stub
+		return currentTeacher.getAllStudents();
 	}
 
 	
