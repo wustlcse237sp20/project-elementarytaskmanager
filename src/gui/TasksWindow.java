@@ -88,10 +88,6 @@ public class TasksWindow {
 			dlmCols.add(controller.getToDoTasks());
 			dlmCols.add(controller.getInProgressTasks());
 			dlmCols.add(controller.getDoneTasks());
-			
-//			toDoListModel = controller.getToDoTasks();
-//			inprogressListModel = controller.getInProgressTasks();
-//			doneListModel = controller.getDoneTasks();
 		}
 		
 		initializeFrame();
@@ -162,47 +158,6 @@ public class TasksWindow {
 			JList<Task> list = jlistCols.get(i);
 			frame.getContentPane().add(list, "cell " + i + " 1 1 3,grow");
 		}
-//		toDoList = new JList<Task>(toDoListModel);
-//		inProgressList = new JList<Task>(inprogressListModel);
-//		doneList = new JList<Task>(doneListModel);
-
-//		if (isTeacher) {
-//			studentList = new JList<Student>(studentListModel);
-//			frame.getContentPane().add(studentList, "cell 0 1 1 3,grow");
-//			frame.getContentPane().add(toDoList, "cell 1 1 1 3,grow");
-//			frame.getContentPane().add(inProgressList, "cell 2 1 1 3,grow");
-//			frame.getContentPane().add(doneList, "cell 3 1 1 3,grow");
-//		} else {
-//			frame.getContentPane().add(toDoList, "cell 0 1 1 3,grow");
-//			frame.getContentPane().add(inProgressList, "cell 1 1 1 3,grow");
-//			frame.getContentPane().add(doneList, "cell 2 1 1 3,grow");
-//		}
-//		toDoList.addMouseListener(new MouseAdapter() {
-//			public void mouseClicked(MouseEvent evt) {
-//				if (evt.getClickCount() == 2) {
-//					int index = toDoList.locationToIndex(evt.getPoint());
-//					changeCategory(toDoListModel, index);
-//				}
-//			}
-//		});
-//
-//		inProgressList.addMouseListener(new MouseAdapter() {
-//			public void mouseClicked(MouseEvent evt) {
-//				if (evt.getClickCount() == 2) {
-//					int index = inProgressList.locationToIndex(evt.getPoint());
-//					changeCategory(inprogressListModel, index);
-//				}
-//			}
-//		});
-//
-//		doneList.addMouseListener(new MouseAdapter() {
-//			public void mouseClicked(MouseEvent evt) {
-//				if (evt.getClickCount() == 2) {
-//					int index = doneList.locationToIndex(evt.getPoint());
-//					changeCategory(doneListModel, index);
-//				}
-//			}
-//		});
 	}
 
 	private void changeCategory(DefaultListModel<Task> currentListModel, int index) {
@@ -212,13 +167,9 @@ public class TasksWindow {
 		if (!task.getCategory().equals(newCategory)) {
 			task.setCategory(newCategory);
 			currentListModel.remove(index);
-			if (newCategory.equals(Categories.ToDo)) {
-				toDoListModel.addElement(task);
-			} else if (newCategory.equals(Categories.InProgress)) {
-				inprogressListModel.addElement(task);
-			} else {
-				doneListModel.addElement(task);
-			}
+			
+			int dlmIndex = newCategory.ordinal();
+			dlmCols.get(dlmIndex).addElement(task);
 
 			controller.getStudent().updateTask(task);
 
