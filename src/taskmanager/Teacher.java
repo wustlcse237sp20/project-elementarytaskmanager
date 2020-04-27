@@ -1,7 +1,6 @@
 package taskmanager;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,23 +14,23 @@ public class Teacher {
 
 	public Teacher(String name) {
 		this.name = name;
-		this.managedStudents = new File("./src/teachers/" + name + ".txt"); //has to change path for the gui
-		try {
-			managedStudents.createNewFile();
-		} catch (IOException e) {
-			System.out.println("Couldn't create new file " + managedStudents);
-			e.printStackTrace();
-		}
-		this.studentListModel = getAllStudents();
+		this.managedStudents = FileWriterHandler.makeFile("teachers/" + name);
 	}
 
+	public File getFile() {
+		return managedStudents;
+	}
+	
 	/**
 	 * adds a student to the list of students the teacher manages
 	 * @param studentName name of student to add
 	 */
 	public void addStudent(String studentName) {
-		FileWriterHandler writer = new FileWriterHandler(managedStudents);
-		writer.writeLine(studentName);
+		FileReaderHandler reader = new FileReaderHandler(managedStudents);
+		if(!reader.containsLine(studentName)) {
+			FileWriterHandler writer = new FileWriterHandler(managedStudents, true);
+			writer.writeLine(studentName);
+		}
 	}
 
 	/**
@@ -79,7 +78,7 @@ public class Teacher {
 		boolean usernameAlreadyInFile = reader.containsLine(teacherName);
 
 		if (!usernameAlreadyInFile) {
-			FileWriterHandler writer = new FileWriterHandler(userFile);
+			FileWriterHandler writer = new FileWriterHandler(userFile, true);
 			writer.writeLine(teacherName);
 		}
 	}

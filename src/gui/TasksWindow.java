@@ -39,8 +39,7 @@ public class TasksWindow {
 		if (teacher.equals("y")) {
 			isTeacher = true;
 		}
-		username = UserInputUtils
-				.promptUser("Please type your username and hit Enter to login to Elementary Task Manager");
+		username = UserInputUtils.promptUser("Please type your username and hit Enter to login to Elementary Task Manager");
 
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
