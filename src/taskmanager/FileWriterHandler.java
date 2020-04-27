@@ -24,6 +24,7 @@ public class FileWriterHandler {
 	 * @return the file created
 	 */
 	public static File makeFile(String path) {
+		System.out.println("making file " + path);
 		File file = new File("./src/" + path + ".txt"); 
 		try {
 			file.createNewFile();
