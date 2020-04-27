@@ -12,14 +12,7 @@ public class Schedule {
 	List<Task> tasks;
 
 	public Schedule(String name) {
-		this.file = new File("./src/students/" + name + ".txt");	//has to change path for the gui
-		try {
-			file.createNewFile();
-		} catch (IOException e) {
-			System.out.println("Couldn't create new file " + file);
-			e.printStackTrace();
-		}
-		
+		this.file = FileWriterHandler.makeFile("students/" + name);
 		this.tasks = getTasks();
 	}
 
@@ -31,7 +24,7 @@ public class Schedule {
 	 * used when ending the program to write the current status of the tasks to the schedule file
 	 */
 	public void writeTasks() {
-		FileWriterHandler writer = new FileWriterHandler(file);
+		FileWriterHandler writer = new FileWriterHandler(file, false);
 		List<String> taskStrings = new LinkedList<>();
 		for(Task task : tasks) {
 			taskStrings.add(task.toString());
@@ -52,8 +45,8 @@ public class Schedule {
 	}
 
 	/**
-	 * returns the list of tasks in the schedule
-	 * @return list of tasks
+	 * 
+	 * @return list of tasks in the schedule
 	 */
 	public List<Task> getTasks() {
 		List<Task> tasks = new LinkedList<Task>();

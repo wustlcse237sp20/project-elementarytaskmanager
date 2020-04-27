@@ -86,7 +86,7 @@ public class Student {
 		boolean usernameAlreadyInFile = reader.containsLine(username);
 
 		if (!usernameAlreadyInFile) {
-			FileWriterHandler usernameWriter = new FileWriterHandler(userFile);
+			FileWriterHandler usernameWriter = new FileWriterHandler(userFile, true);
 			usernameWriter.writeLine(username);
 			System.out.println("User " + username + " created");
 		}
