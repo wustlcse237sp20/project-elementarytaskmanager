@@ -10,15 +10,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.EnumSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
-import taskmanager.*;
 
 public class TasksWindow {
 	private JFrame frame;
