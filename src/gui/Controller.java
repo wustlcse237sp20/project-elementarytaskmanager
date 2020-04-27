@@ -11,4 +11,6 @@ public interface Controller {
 	public DefaultListModel<Task> getDoneTasks();
 	public Task addTask(String name);
 	public Student getStudent();
+	
+	public DefaultListModel<Student> getStudents();
 }

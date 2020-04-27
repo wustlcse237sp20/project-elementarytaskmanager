@@ -1,6 +1,5 @@
 package taskmanager;
 
-import java.util.LinkedList;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import java.io.File;
@@ -90,5 +89,10 @@ public class Student {
 			usernameWriter.writeLine(username);
 			System.out.println("User " + username + " created");
 		}
+	}
+	
+	@Override
+	public String toString() {
+		return this.name;
 	}
 }

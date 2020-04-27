@@ -5,9 +5,13 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.swing.DefaultListModel;
+
 public class Teacher {
 	private String name;
 	private File managedStudents;
+	private List<Student> students;
+	private DefaultListModel<Student> studentListModel;
 
 	public Teacher(String name) {
 		this.name = name;
@@ -78,6 +82,17 @@ public class Teacher {
 			FileWriterHandler writer = new FileWriterHandler(userFile, true);
 			writer.writeLine(teacherName);
 		}
+	}
+	
+	public DefaultListModel<Student> getAllStudents(){
+		DefaultListModel<Student> studentsListModel = new DefaultListModel<Student>();
+		FileReaderHandler reader = new FileReaderHandler(managedStudents);
+		List<String> lines = reader.getLines();
+		
+		for(String line : lines) {
+			studentsListModel.addElement(new Student(line));
+		}
+		return studentsListModel;
 	}
 
 	public static void main(String[] args) {
