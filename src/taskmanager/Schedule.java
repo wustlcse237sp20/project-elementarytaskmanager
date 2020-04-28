@@ -81,6 +81,27 @@ public class Schedule {
 		}
 		return tasks;
 	}
+	
+	/**
+	 * used by the gui to return tasks by specific day
+	 * @param day desired day of tasks
+	 * @return default list model of tasks
+	 */
+	public DefaultListModel<Task> getTasksByListDay(Days day) {
+		DefaultListModel<Task> tasks = new DefaultListModel<Task>();
+
+		FileReaderHandler reader = new FileReaderHandler(file);
+		List<String> lines = reader.getLines();
+		int index = 0;
+		for (String line : lines) {
+			Task task = createTaskFromLine(line);
+			if(task.getDay().equals(day)) {
+				tasks.add(index, task);
+				index++;
+			}
+		}
+		return tasks;
+	}
 
 	/**
 	 * parses line from schedule file and creates a task from it
@@ -88,15 +109,17 @@ public class Schedule {
 	 * @return newly created task
 	 */
 	private Task createTaskFromLine(String line) {
-		int divide = line.indexOf('-');
-		if (divide > -1) {
-			String name = line.substring(0, divide - 1);
-			String category = line.substring(divide + 2, line.length());
-			Task task = new Task(name, category);
-			return task;
-		} else {
+		String[] dividedLine = line.split("-");
+		
+		if(dividedLine.length != 3) {
 			System.out.println("Could not read task from line");
 			return null;
 		}
+		
+		String name = dividedLine[0];
+		String category = dividedLine[1];
+		String day = dividedLine[2];
+		Task task = new Task(name, category, day);
+		return task;
 	}
 }

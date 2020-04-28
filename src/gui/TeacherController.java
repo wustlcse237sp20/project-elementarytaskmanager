@@ -1,9 +1,14 @@
 package gui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 //import java.io.File;
 
 import javax.swing.DefaultListModel;
 
+import taskmanager.Categories;
+import taskmanager.Days;
 import taskmanager.Student;
 //import taskmanager.Student;
 import taskmanager.Task;
@@ -19,44 +24,49 @@ public class TeacherController implements Controller{
 		//TODO: login teacher method???
 		
 	}
-	@Override
-	public DefaultListModel<Task> getToDoTasks() {
-		// TODO Auto-generated method stub
-		DefaultListModel<Task> listModel = new DefaultListModel<Task>();
-		listModel.addElement(new Task("test"));
-		return listModel;
-	}
 
-	@Override
-	public DefaultListModel<Task> getInProgressTasks() {
-		// TODO Auto-generated method stub
-		DefaultListModel<Task> listModel = new DefaultListModel<Task>();
-		listModel.addElement(new Task("test"));
-		return listModel;
-	}
-
-	@Override
-	public DefaultListModel<Task> getDoneTasks() {
-		// TODO Auto-generated method stub
-		DefaultListModel<Task> listModel = new DefaultListModel<Task>();
-		listModel.addElement(new Task("test"));
-		return listModel;
-	}
 	@Override
 	public Task addTask(String name) {
 		return null;
 		// TODO Auto-generated method stub
 		
 	}
+	
 	@Override
 	public Student getStudent() {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
 	@Override
 	public DefaultListModel<Student> getStudents() {
 		// TODO Auto-generated method stub
 		return currentTeacher.getAllStudents();
+	}
+	
+	@Override
+	public List<DefaultListModel<Task>> getCategoryTasks() {
+		List<DefaultListModel<Task>> tasks = new ArrayList<>();
+		
+		for(Categories category : Categories.values()) {
+			DefaultListModel<Task> listModel = new DefaultListModel<Task>();
+			listModel.addElement(new Task("test"));
+			tasks.add(listModel);
+		}
+				
+		return tasks;
+	}
+	@Override
+	public List<DefaultListModel<Task>> getDayTasks() {
+		List<DefaultListModel<Task>> tasks = new ArrayList<>();
+		
+		for(Days day : Days.values()) {
+			DefaultListModel<Task> listModel = new DefaultListModel<Task>();
+			listModel.addElement(new Task("test"));
+			tasks.add(listModel);
+		}
+				
+		return tasks;
 	}
 
 	

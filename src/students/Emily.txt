@@ -1,3 +1,5 @@
-task1 - Done
-new task GUI - InProgress
-new task!! - ToDo
+task 1-InProgress-Monday
+task 2-InProgress-Monday
+new task GUI-ToDo-Monday
+finished task!-Done-Monday
+due wed-ToDo-Monday

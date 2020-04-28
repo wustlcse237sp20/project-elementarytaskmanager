@@ -22,14 +22,14 @@ public class TasksWindow {
 	private Controller controller;
 	static boolean isTeacher = false;
 	static String username;
-	private DefaultListModel<Task> toDoListModel;
-	private DefaultListModel<Task> inprogressListModel;
-	private DefaultListModel<Task> doneListModel;
-	private DefaultListModel<Student> studentListModel;
-	private JList<Task> toDoList;
-	private JList<Task> inProgressList;
-	private JList<Task> doneList;
-	private JList<Student> studentList;
+//	private DefaultListModel<Task> toDoListModel;
+//	private DefaultListModel<Task> inprogressListModel;
+//	private DefaultListModel<Task> doneListModel;
+//	private DefaultListModel<Student> studentListModel;
+//	private JList<Task> toDoList;
+//	private JList<Task> inProgressList;
+//	private JList<Task> doneList;
+//	private JList<Student> studentList;
 	private JButton saveButton;
 	private List<DefaultListModel<Task>> dlmCols;
 	private List<JList<Task>> jlistCols;
@@ -61,9 +61,15 @@ public class TasksWindow {
 	 * Create the application.
 	 */
 	public TasksWindow() {
-		this.dlmCols = new ArrayList<>();
-		this.jlistCols = new ArrayList<>();
+		if(isTeacher) {
+			controller = new TeacherController(username);
+		} else {
+			controller = new StudentController(username);
+		}
 		
+		dlmCols = controller.getCategoryTasks();
+		this.jlistCols = new ArrayList<>();
+
 		initialize();
 	}
 
@@ -71,22 +77,6 @@ public class TasksWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		if (isTeacher) {
-			controller = new TeacherController(username);
-			// TODO: initialze lists?
-			
-			dlmCols.add(controller.getToDoTasks());
-			dlmCols.add(controller.getInProgressTasks());
-			dlmCols.add(controller.getDoneTasks());
-//			dlmCols.add(controller.getStudents());			
-		} else {
-			controller = new StudentController(username);
-			
-			dlmCols.add(controller.getToDoTasks());
-			dlmCols.add(controller.getInProgressTasks());
-			dlmCols.add(controller.getDoneTasks());
-		}
-		
 		initializeFrame();
 		initializeGUIElements();
 		addTaskButton();
@@ -102,8 +92,8 @@ public class TasksWindow {
 	}
 
 	private void initializeGUIElements() {
-		for(int i = 0; i < Categories.values().length; i++) {
-			JLabel lblNewLabel = new JLabel(Categories.values()[i].toString());
+		for(int i = 0; i < Categories.values().length; i++) {						// CHANGE~~~~~~~~~~~~~~~~~~~~~~~~~
+			JLabel lblNewLabel = new JLabel(Categories.values()[i].toString());	// CHANGE~~~~~~~~~~~~~~~~~~~~~~~~~
 			frame.getContentPane().add(lblNewLabel, "cell " + i + " 0");
 		}
 	}
@@ -118,7 +108,7 @@ public class TasksWindow {
 				String nameString = (String) JOptionPane.showInputDialog(frame, "What is the task?", null);
 				if (nameString != null && (nameString.length() > 0)) {
 					Task task = controller.addTask(nameString);
-					toDoListModel.addElement(task);
+					dlmCols.get(0).addElement(task);
 				}
 			}
 		});
@@ -158,11 +148,11 @@ public class TasksWindow {
 	}
 
 	private void changeCategory(DefaultListModel<Task> currentListModel, int index) {
-		Categories newCategory = updateTaskWindow();
+		Categories newCategory = updateTaskWindow();					// CHANGE~~~~~~~~~~~~~~~~~~~~~~~~~
 
 		Task task = currentListModel.get(index);
 		if (!task.getCategory().equals(newCategory)) {
-			task.setCategory(newCategory);
+			task.setCategory(newCategory);							// CHANGE~~~~~~~~~~~~~~~~~~~~~~~~~
 			currentListModel.remove(index);
 			
 			int dlmIndex = newCategory.ordinal();
@@ -174,11 +164,11 @@ public class TasksWindow {
 		}
 	}
 
-	public Categories updateTaskWindow() {
-		Categories[] choices = Categories.values();
+	public Categories updateTaskWindow() {							// CHANGE~~~~~~~~~~~~~~~~~~~~~~~~~
+		Categories[] choices = Categories.values();							// CHANGE*2~~~~~~~~~~~~~~~~~~~~~~~~~
 		String newCategory = (String) JOptionPane.showInputDialog(null, "New category:", "Update",
 				JOptionPane.QUESTION_MESSAGE, null, Arrays.stream(choices).map(Categories::name).toArray(String[]::new),
-				choices[0].name());
-		return Categories.valueOf(newCategory);
+				choices[0].name());								// CHANGE~~~~~~~~^~~~~~~~~~~~~~~~~~
+		return Categories.valueOf(newCategory);						// CHANGE~~~~~~~~~~~~~~~~~~~~~~~~~
 	}
 }

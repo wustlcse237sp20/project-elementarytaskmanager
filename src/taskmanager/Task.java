@@ -43,7 +43,7 @@ public class Task {
 		this.category = Categories.valueOf(category);
 	}
 	
-	public Days getDay(Days day) {
+	public Days getDay() {
 		return day;
 	}
 	
@@ -58,7 +58,7 @@ public class Task {
 
 	@Override
 	public String toString() {
-		return name + " - " + category.name();
+		return name + "-" + category.name() + "-" + day.name();
 	}
 	
 	@Override

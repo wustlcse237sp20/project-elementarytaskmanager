@@ -43,6 +43,16 @@ public class Student {
 	public DefaultListModel<Task> getTasksByCategory(Categories category) {
 		return schedule.getTasksByListCategory(category);
 	}
+	
+	/**
+	 * used by the gui to return tasks in a particular day
+	 * @param day the desired day 
+	 * @return a default list model of those tasks
+	 */
+	public DefaultListModel<Task> getTasksByDay(Days day) {
+		return schedule.getTasksByListDay(day);
+	}
+	
 
 	/**
 	 * writes the current list of tasks to the schedule
