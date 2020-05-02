@@ -56,9 +56,13 @@ public class Task {
 		this.day =  Days.valueOf(day);
 	}
 
+	public String writeToFileFormat() {
+		return name + "-" + category.name() + "-" + day.name();
+	}
+	
 	@Override
 	public String toString() {
-		return name + "-" + category.name() + "-" + day.name();
+		return name;
 	}
 	
 	@Override

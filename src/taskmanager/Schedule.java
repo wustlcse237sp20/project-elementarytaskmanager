@@ -26,7 +26,7 @@ public class Schedule {
 		FileWriterHandler writer = new FileWriterHandler(file, false);
 		List<String> taskStrings = new LinkedList<>();
 		for(Task task : tasks) {
-			taskStrings.add(task.toString());
+			taskStrings.add(task.writeToFileFormat());
 		}
 		writer.writeLines(taskStrings);
 	}
@@ -67,7 +67,7 @@ public class Schedule {
 	 * @return default list model of tasks
 	 */
 	public DefaultListModel<Task> getTasksByListCategory(Categories category) {
-		DefaultListModel<Task> tasks = new DefaultListModel<Task>();
+		DefaultListModel<Task> tasks = new DefaultListModel<>();
 
 		FileReaderHandler reader = new FileReaderHandler(file);
 		List<String> lines = reader.getLines();
@@ -88,7 +88,7 @@ public class Schedule {
 	 * @return default list model of tasks
 	 */
 	public DefaultListModel<Task> getTasksByListDay(Days day) {
-		DefaultListModel<Task> tasks = new DefaultListModel<Task>();
+		DefaultListModel<Task> tasks = new DefaultListModel<>();
 
 		FileReaderHandler reader = new FileReaderHandler(file);
 		List<String> lines = reader.getLines();

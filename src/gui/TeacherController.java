@@ -49,7 +49,7 @@ public class TeacherController implements Controller{
 		List<DefaultListModel<Task>> tasks = new ArrayList<>();
 		
 		for(Categories category : Categories.values()) {
-			DefaultListModel<Task> listModel = new DefaultListModel<Task>();
+			DefaultListModel<Task> listModel = new DefaultListModel<>();
 			listModel.addElement(new Task("test"));
 			tasks.add(listModel);
 		}
@@ -61,7 +61,7 @@ public class TeacherController implements Controller{
 		List<DefaultListModel<Task>> tasks = new ArrayList<>();
 		
 		for(Days day : Days.values()) {
-			DefaultListModel<Task> listModel = new DefaultListModel<Task>();
+			DefaultListModel<Task> listModel = new DefaultListModel<>();
 			listModel.addElement(new Task("test"));
 			tasks.add(listModel);
 		}
