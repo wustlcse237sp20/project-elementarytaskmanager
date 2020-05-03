@@ -7,12 +7,15 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.List;
 
+import javax.swing.DefaultListModel;
+
 import org.junit.Test;
 
 
 import taskmanager.Student;
 import taskmanager.Teacher;
 import taskmanager.Task;
+import taskmanager.Categories;
 import taskmanager.Schedule;
 
 public class ScheduleTest {
