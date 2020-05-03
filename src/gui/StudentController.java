@@ -17,7 +17,7 @@ public class StudentController implements Controller{
 		return currentStudent;
 	}
 	
-	public Task addTask(String name) {
+	public Task addTask(String name, List<String> list) {
 		Task newTask = new Task(name);
 		currentStudent.addTask(newTask);
 		return newTask;
@@ -25,7 +25,6 @@ public class StudentController implements Controller{
 
 	@Override
 	public DefaultListModel<Student> getStudents() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -51,6 +50,29 @@ public class StudentController implements Controller{
 		}
 				
 		return tasks;
+	}
+
+	@Override
+	public void setStudent(Student student) {
+	}
+
+	@Override
+	public List<String> processInput(String listOfNames) {
+		return null;
+	}
+
+	@Override
+	public void addStudent(String name) {
+	}
+
+	@Override
+	public Levels getStudentLevel() {
+		return currentStudent.calculateLevel();
+	}
+
+	@Override
+	public DefaultListModel<Achievement> getStudentAchievements() {
+		return currentStudent.checkAcheivements();
 	}
 	
 }
