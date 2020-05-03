@@ -123,8 +123,11 @@ public class TasksWindow {
 					processedNames = null;
 				}
 				if (nameString != null && (nameString.length() > 0)) {
-					Task task = controller.addTask(nameString, processedNames);					
-					dlmCols.get(0).addElement(task);
+					Task task = controller.addTask(nameString, processedNames);
+//					if (!isTeacher) {
+						dlmCols.get(0).addElement(task); // TODO: wrong if the teacher is not adding the task to the
+															// current student
+//					}
 				}
 			}
 		});
@@ -140,7 +143,7 @@ public class TasksWindow {
 		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (isTeacher) {
-					for (int i = 0; i < controller.getStudents().getSize(); i++) { // TODO: not saving to file
+					for (int i = 0; i < controller.getStudents().getSize(); i++) {
 						controller.getStudents().get(i).saveSchedule();
 					}
 				} else {
@@ -219,7 +222,7 @@ public class TasksWindow {
 			dlmCols.get(dlmIndex).addElement(task);
 
 			controller.getStudent().updateTask(task);
-			controller.getStudent().saveSchedule();	//had to add for teachers
+			controller.getStudent().saveSchedule(); // had to add for teachers
 		}
 	}
 
