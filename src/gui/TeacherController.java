@@ -28,7 +28,7 @@ public class TeacherController implements Controller {
 		try {
 			this.currentStudent = currentTeacher.getAllStudents().firstElement();
 		} catch (Exception e) {
-			this.currentStudent = new Student("temp student"); // TODO i think this works...??
+			this.currentStudent = new Student("temp student");
 		}
 
 	}
@@ -53,19 +53,16 @@ public class TeacherController implements Controller {
 	@Override
 	public List<DefaultListModel<Task>> getCategoryTasks() {
 		List<DefaultListModel<Task>> tasks = new ArrayList<>();
-
 		for (Categories category : Categories.values()) {
 			DefaultListModel<Task> taskColumn = currentStudent.getTasksByCategory(category);
 			tasks.add(taskColumn);
 		}
-
 		return tasks;
 	}
 
 	@Override
 	public List<DefaultListModel<Task>> getDayTasks() {
 		List<DefaultListModel<Task>> tasks = new ArrayList<>();
-
 		for (Days day : Days.values()) {
 			DefaultListModel<Task> taskColumn = currentStudent.getTasksByDay(day);
 			tasks.add(taskColumn);
@@ -80,19 +77,7 @@ public class TeacherController implements Controller {
 
 	@Override
 	public List<String> processInput(String listOfNames) {
-		List<String> processedNames;
-		if (listOfNames.equals(".")) {
-			listOfNames = "";
-			FileReaderHandler reader = new FileReaderHandler(currentTeacher.getFile());
-			processedNames = reader.getLines();
-		} else {
-			String[] tempProcessedNames = listOfNames.split("\\s*,\\s*");
-			processedNames = new LinkedList<String>();
-			for (String name : tempProcessedNames) {
-				processedNames.add(name);
-			}
-		}
-		return processedNames;
+		return currentTeacher.processInput(listOfNames);
 	}
 
 	@Override
