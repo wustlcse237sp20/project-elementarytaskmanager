@@ -1,5 +1,6 @@
 package taskmanager;
 
+import java.util.LinkedList;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import java.io.File;
@@ -7,10 +8,16 @@ import java.io.File;
 public class Student {
 	private Schedule schedule;
 	String name;
+	List<Achievement> possibleAchievements;
+	DefaultListModel<Achievement> achievements;
 
 	public Student(String name) {
 		this.name = name;
 		this.schedule = new Schedule(name);
+		possibleAchievements = new LinkedList<Achievement>();
+		possibleAchievements.add(new Juggler());
+		possibleAchievements.add(new Pyramid());
+		achievements = new DefaultListModel<Achievement>();
 	}
 	
 	public Schedule getSchedule() {
@@ -99,6 +106,34 @@ public class Student {
 			usernameWriter.writeLine(username);
 			System.out.println("User " + username + " created");
 		}
+	}
+	
+	/**
+	 * determines what level of accomplishment the student is at based on the tasks
+	 * @return a level enum based on number of tasks IP/Done
+	 */
+	public Levels calculateLevel() {
+		DefaultListModel<Task> completedTasks = getTasksByCategory(Categories.Done);
+		DefaultListModel<Task> inProgressTasks = getTasksByCategory(Categories.InProgress);
+		if(completedTasks.getSize() > 10) {
+			return Levels.TaskMaster;
+		}
+		else if(completedTasks.getSize() + inProgressTasks.getSize() > 10) {
+			return Levels.Novice;
+		}
+		else {
+			return Levels.Beginner;
+		}
+	}
+	
+	public DefaultListModel<Achievement> checkAcheivements() {
+		this.achievements = new DefaultListModel<Achievement>();
+		for(Achievement a : possibleAchievements) {
+			if(a.isCompleted(this)) {
+				achievements.addElement(a);
+			}
+		}
+		return this.achievements;
 	}
 	
 	@Override

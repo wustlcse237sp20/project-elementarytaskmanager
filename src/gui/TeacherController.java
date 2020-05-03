@@ -8,9 +8,11 @@ import java.util.List;
 
 import javax.swing.DefaultListModel;
 
+import taskmanager.Achievement;
 import taskmanager.Categories;
 import taskmanager.Days;
 import taskmanager.FileReaderHandler;
+import taskmanager.Levels;
 import taskmanager.Student;
 //import taskmanager.Student;
 import taskmanager.Task;
@@ -83,6 +85,16 @@ public class TeacherController implements Controller {
 	@Override
 	public void addStudent(String name) {
 		this.currentTeacher.addStudent(name);
+	}
+
+	@Override
+	public Levels getStudentLevel() {
+		return currentStudent.calculateLevel();
+	}
+	
+	@Override
+	public DefaultListModel<Achievement> getStudentAchievements() {
+		return currentStudent.checkAcheivements();
 	}
 
 }

@@ -24,4 +24,8 @@ public interface Controller {
 	public List<String> processInput(String listOfNames);
 	
 	public void addStudent(String name);
+	
+	public Levels getStudentLevel();
+	
+	public DefaultListModel<Achievement> getStudentAchievements();
 }

@@ -64,5 +64,15 @@ public class StudentController implements Controller{
 	@Override
 	public void addStudent(String name) {
 	}
+
+	@Override
+	public Levels getStudentLevel() {
+		return currentStudent.calculateLevel();
+	}
+
+	@Override
+	public DefaultListModel<Achievement> getStudentAchievements() {
+		return currentStudent.checkAcheivements();
+	}
 	
 }
