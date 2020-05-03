@@ -16,6 +16,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import net.miginfocom.swing.MigLayout;
+
 import javax.swing.JLabel;
 
 public class TasksWindow {
@@ -28,6 +29,9 @@ public class TasksWindow {
 	private List<JList<Task>> jlistCols;
 	private DefaultListModel<Student> studentDefaultListModel;
 	private JList<Student> studentJList;
+	private JLabel levelLabel;
+	private JList<Achievement> studentAchievements;
+	private DefaultListModel<Achievement> achievementDefaultListModel;
 
 	/**
 	 * Launch the application.
@@ -78,6 +82,7 @@ public class TasksWindow {
 		addTaskButton();
 		saveChangesButton();
 		createTaskLists();
+		addAchievements();
 		if (isTeacher) {
 			addStudentButton();
 			createStudentList();
@@ -96,11 +101,31 @@ public class TasksWindow {
 			JLabel lblNewLabel = new JLabel(Categories.values()[i].toString()); // CHANGE~~~~~~~~~~~~~~~~~~~~~~~~~
 			frame.getContentPane().add(lblNewLabel, "cell " + i + " 0");
 		}
+		int col = dlmCols.size();
+			
 		if (isTeacher) {
 			JLabel students = new JLabel("Students");
 			frame.getContentPane().add(students, "cell " + Categories.values().length + " 0");
+			col++;
 		}
+		this.levelLabel = new JLabel(controller.getStudentLevel().toString());
+		frame.getContentPane().add(levelLabel, "cell " + col + " 0");
+		//JLabel achievements = new JLabel("Achievements");
+		//frame.getContentPane().add(achievements, "cell " + Categories.values().length + " 1");
 	}
+	
+	private void addAchievements() {
+			this.achievementDefaultListModel = controller.getStudentAchievements();
+			this.studentAchievements = new JList<Achievement>(this.achievementDefaultListModel);
+			
+			int col = dlmCols.size();
+			if(isTeacher) {
+				col++;
+			}
+			frame.getContentPane().add(studentAchievements, "cell " + col  + " 1,alignx right,grow,alignytop");
+			System.out.println(controller.getStudent());
+		}
+	
 
 	private void addTaskButton() {
 		int col = dlmCols.size();
@@ -108,7 +133,7 @@ public class TasksWindow {
 			col++;
 		}
 		JButton addTaskButton = new JButton("Add Task");
-		frame.getContentPane().add(addTaskButton, "cell " + col + " 1,alignx right,aligny bottom");
+		frame.getContentPane().add(addTaskButton, "cell " + col + " 2,alignx right,aligny bottom");
 
 		addTaskButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -128,9 +153,12 @@ public class TasksWindow {
 						dlmCols.get(0).addElement(task); // TODO: wrong if the teacher is not adding the task to the
 															// current student
 //					}
+
 				}
 			}
 		});
+		this.levelLabel.setText(controller.getStudentLevel().toString());
+		
 	}
 
 	private void saveChangesButton() {
@@ -199,6 +227,17 @@ public class TasksWindow {
 						int index = studentJList.locationToIndex(evt.getPoint());
 						Student student = studentDefaultListModel.get(index);
 						controller.setStudent(student);
+						levelLabel.setText(controller.getStudentLevel().toString());
+						achievementDefaultListModel = controller.getStudentAchievements();
+						frame.getContentPane().remove(studentAchievements);
+						studentAchievements.removeAll();
+						achievementDefaultListModel = controller.getStudentAchievements();
+						studentAchievements = new JList<Achievement>(achievementDefaultListModel);
+						int col = dlmCols.size();
+						if(isTeacher) {
+							col++;
+						}
+						frame.getContentPane().add(studentAchievements, "cell " + col + " 1,alignx right,alignytop,grow");
 						dlmCols = controller.getCategoryTasks();
 						for (int i = 0; i < dlmCols.size(); i++) {
 							jlistCols.get(i).setModel(dlmCols.get(i));
@@ -223,6 +262,19 @@ public class TasksWindow {
 
 			controller.getStudent().updateTask(task);
 			controller.getStudent().saveSchedule(); // had to add for teachers
+			this.levelLabel.setText(controller.getStudentLevel().toString());
+			
+			frame.getContentPane().remove(studentAchievements);
+			studentAchievements.removeAll();
+			this.achievementDefaultListModel = controller.getStudentAchievements();
+			this.studentAchievements = new JList<Achievement>(this.achievementDefaultListModel);
+			System.out.println(this.achievementDefaultListModel.getSize());
+
+			int col = dlmCols.size();
+			if(isTeacher) {
+				col++;
+			}
+			frame.getContentPane().add(studentAchievements, "cell " + col + " 1,alignx right,alignytop,grow");
 		}
 	}
 
