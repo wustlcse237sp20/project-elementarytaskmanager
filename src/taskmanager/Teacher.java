@@ -23,13 +23,13 @@ public class Teacher {
 	
 	/**
 	 * adds a student to the list of students the teacher manages
-	 * @param studentName name of student to add
+	 * @param testStudent name of student to add
 	 */
-	public void addStudent(String studentName) {
+	public void addStudent(String testStudent) {
 		FileReaderHandler reader = new FileReaderHandler(managedStudents);
-		if(!reader.containsLine(studentName)) {
+		if(!reader.containsLine(testStudent)) {
 			FileWriterHandler writer = new FileWriterHandler(managedStudents, true);
-			writer.writeLine(studentName);
+			writer.writeLine(testStudent);
 		}
 	}
 
