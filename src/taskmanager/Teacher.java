@@ -63,6 +63,7 @@ public class Teacher {
 		for (int studentCounter = 0; studentCounter < studentNames.size(); studentCounter++) {
 			Student student = new Student(studentNames.get(studentCounter));
 			student.addTask(task);
+			student.saveSchedule();
 			System.out.println(
 					"Task " + task.getName() + " has been successfully added for " + studentNames.get(studentCounter));
 		}
