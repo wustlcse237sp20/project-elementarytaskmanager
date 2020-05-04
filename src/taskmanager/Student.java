@@ -9,7 +9,6 @@ public class Student {
 	private Schedule schedule;
 	String name;
 	List<Achievement> possibleAchievements;
-	DefaultListModel<Achievement> achievements;
 
 	public Student(String name) {
 		this.name = name;
@@ -17,7 +16,6 @@ public class Student {
 		possibleAchievements = new LinkedList<Achievement>();
 		possibleAchievements.add(new Juggler());
 		possibleAchievements.add(new Pyramid());
-		achievements = new DefaultListModel<Achievement>();
 	}
 	
 	public Schedule getSchedule() {
@@ -126,14 +124,18 @@ public class Student {
 		}
 	}
 	
+	/**
+	 * checks whether or not a student has accomplished certain achievements 
+	 * @return a list of all achievements the student has earned
+	 */
 	public DefaultListModel<Achievement> checkAcheivements() {
-		this.achievements = new DefaultListModel<Achievement>();
+		DefaultListModel<Achievement> achievements = new DefaultListModel<Achievement>();
 		for(Achievement a : possibleAchievements) {
 			if(a.isCompleted(this)) {
 				achievements.addElement(a);
 			}
 		}
-		return this.achievements;
+		return achievements;
 	}
 	
 	@Override

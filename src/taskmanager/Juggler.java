@@ -2,6 +2,10 @@ package taskmanager;
 import javax.swing.DefaultListModel;
 public class Juggler implements Achievement {
 
+	/**
+	 * checks whether or not the given student has completed this achievement
+	 * @return true is they have, false otherwise
+	 */
 	@Override
 	public boolean isCompleted(Student s) {
 		DefaultListModel<Task> inProgressTasks = s.getTasksByCategory(Categories.InProgress);
