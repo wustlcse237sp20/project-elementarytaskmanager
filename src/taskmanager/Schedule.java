@@ -1,7 +1,6 @@
 package taskmanager;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,14 +11,7 @@ public class Schedule {
 	List<Task> tasks;
 
 	public Schedule(String name) {
-		this.file = new File("./students/" + name + ".txt");	//has to change path for the gui
-		try {
-			file.createNewFile();
-		} catch (IOException e) {
-			System.out.println("Couldn't create new file " + file);
-			e.printStackTrace();
-		}
-		
+		this.file = FileWriterHandler.makeFile("students/" + name);
 		this.tasks = getTasks();
 	}
 
@@ -31,10 +23,10 @@ public class Schedule {
 	 * used when ending the program to write the current status of the tasks to the schedule file
 	 */
 	public void writeTasks() {
-		FileWriterHandler writer = new FileWriterHandler(file);
+		FileWriterHandler writer = new FileWriterHandler(file, false);
 		List<String> taskStrings = new LinkedList<>();
 		for(Task task : tasks) {
-			taskStrings.add(task.toString());
+			taskStrings.add(task.writeToFileFormat());
 		}
 		writer.writeLines(taskStrings);
 	}
@@ -52,8 +44,8 @@ public class Schedule {
 	}
 
 	/**
-	 * returns the list of tasks in the schedule
-	 * @return list of tasks
+	 * 
+	 * @return list of tasks in the schedule
 	 */
 	public List<Task> getTasks() {
 		List<Task> tasks = new LinkedList<Task>();
@@ -75,7 +67,7 @@ public class Schedule {
 	 * @return default list model of tasks
 	 */
 	public DefaultListModel<Task> getTasksByListCategory(Categories category) {
-		DefaultListModel<Task> tasks = new DefaultListModel<Task>();
+		DefaultListModel<Task> tasks = new DefaultListModel<>();
 
 		FileReaderHandler reader = new FileReaderHandler(file);
 		List<String> lines = reader.getLines();
@@ -89,6 +81,27 @@ public class Schedule {
 		}
 		return tasks;
 	}
+	
+	/**
+	 * used by the gui to return tasks by specific day
+	 * @param day desired day of tasks
+	 * @return default list model of tasks
+	 */
+	public DefaultListModel<Task> getTasksByListDay(Days day) {
+		DefaultListModel<Task> tasks = new DefaultListModel<>();
+
+		FileReaderHandler reader = new FileReaderHandler(file);
+		List<String> lines = reader.getLines();
+		int index = 0;
+		for (String line : lines) {
+			Task task = createTaskFromLine(line);
+			if(task.getDay().equals(day)) {
+				tasks.add(index, task);
+				index++;
+			}
+		}
+		return tasks;
+	}
 
 	/**
 	 * parses line from schedule file and creates a task from it
@@ -96,15 +109,17 @@ public class Schedule {
 	 * @return newly created task
 	 */
 	private Task createTaskFromLine(String line) {
-		int divide = line.indexOf('-');
-		if (divide > -1) {
-			String name = line.substring(0, divide - 1);
-			String category = line.substring(divide + 2, line.length());
-			Task task = new Task(name, category);
-			return task;
-		} else {
+		String[] dividedLine = line.split("-");
+		
+		if(dividedLine.length != 3) {
 			System.out.println("Could not read task from line");
 			return null;
 		}
+		
+		String name = dividedLine[0];
+		String category = dividedLine[1];
+		String day = dividedLine[2];
+		Task task = new Task(name, category, day);
+		return task;
 	}
 }

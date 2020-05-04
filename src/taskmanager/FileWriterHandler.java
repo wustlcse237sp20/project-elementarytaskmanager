@@ -9,12 +9,30 @@ import java.util.List;
 public class FileWriterHandler {
 	private BufferedWriter writer;
 
-	public FileWriterHandler(File file) {
+	public FileWriterHandler(File file, boolean append) {
 		try {
-			this.writer = new BufferedWriter(new FileWriter(file)); // Set true for append mode
+			this.writer = new BufferedWriter(new FileWriter(file, append)); // Set true for append mode
 		} catch (IOException e) {
 			System.out.println("Could not find file " + file);
 		}
+	}
+	/**
+	 * Makes a new file
+	 * @param path the path for the file within .src, excluding .txt
+	 * ex.	"students/Emily"		-> ./src/students/Emily.txt
+	 * 		"teachers/RonCytron"	-> ./src/teachers/RonCytron.txt
+	 * @return the file created
+	 */
+	public static File makeFile(String path) {
+		System.out.println("making file " + path);
+		File file = new File("./src/" + path + ".txt"); 
+		try {
+			file.createNewFile();
+		} catch (IOException e) {
+			System.out.println("Couldn't create new file " + file);
+			e.printStackTrace();
+		}
+		return file;
 	}
 
 	/**

@@ -1,32 +1,36 @@
 package taskmanager;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+
+import javax.swing.DefaultListModel;
 
 public class Teacher {
 	private String name;
 	private File managedStudents;
+	private List<Student> students;
+	private DefaultListModel<Student> studentListModel;
 
 	public Teacher(String name) {
 		this.name = name;
-		this.managedStudents = new File("./src/teachers/" + name + ".txt"); //has to change path for the gui
-		try {
-			managedStudents.createNewFile();
-		} catch (IOException e) {
-			System.out.println("Couldn't create new file " + managedStudents);
-			e.printStackTrace();
-		}
+		this.managedStudents = FileWriterHandler.makeFile("teachers/" + name);
 	}
 
+	public File getFile() {
+		return managedStudents;
+	}
+	
 	/**
 	 * adds a student to the list of students the teacher manages
-	 * @param studentName name of student to add
+	 * @param testStudent name of student to add
 	 */
-	public void addStudent(String studentName) {
-		FileWriterHandler writer = new FileWriterHandler(managedStudents);
-		writer.writeLine(studentName);
+	public void addStudent(String testStudent) {
+		FileReaderHandler reader = new FileReaderHandler(managedStudents);
+		if(!reader.containsLine(testStudent)) {
+			FileWriterHandler writer = new FileWriterHandler(managedStudents, true);
+			writer.writeLine(testStudent);
+		}
 	}
 
 	/**
@@ -59,6 +63,7 @@ public class Teacher {
 		for (int studentCounter = 0; studentCounter < studentNames.size(); studentCounter++) {
 			Student student = new Student(studentNames.get(studentCounter));
 			student.addTask(task);
+			student.saveSchedule();
 			System.out.println(
 					"Task " + task.getName() + " has been successfully added for " + studentNames.get(studentCounter));
 		}
@@ -74,9 +79,20 @@ public class Teacher {
 		boolean usernameAlreadyInFile = reader.containsLine(teacherName);
 
 		if (!usernameAlreadyInFile) {
-			FileWriterHandler writer = new FileWriterHandler(userFile);
+			FileWriterHandler writer = new FileWriterHandler(userFile, true);
 			writer.writeLine(teacherName);
 		}
+	}
+	
+	public DefaultListModel<Student> getAllStudents(){
+		DefaultListModel<Student> studentsListModel = new DefaultListModel<Student>();
+		FileReaderHandler reader = new FileReaderHandler(managedStudents);
+		List<String> lines = reader.getLines();
+		
+		for(String line : lines) {
+			studentsListModel.addElement(new Student(line));
+		}
+		return studentsListModel;
 	}
 
 	public static void main(String[] args) {

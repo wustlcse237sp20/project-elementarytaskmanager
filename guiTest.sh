@@ -1,10 +1,7 @@
 #!/bin/bash
-cd src
 
-javac -cp ../miglayout15-swing.jar  ./taskmanager/*.java ./gui/*.java
+javac -cp miglayout15-swing.jar ./src/taskmanager/*.java ./src/gui/*.java -d bin/
+java -cp "miglayout15-swing.jar:bin/" gui/TasksWindow
 
-java -cp ../miglayout15-swing.jar:. gui/TasksWindow
-
-cd ..
-rm ./src/taskmanager/*class
-rm ./src/gui/*class
+rm ./bin/gui/*class
+rm ./bin/taskmanager/*class

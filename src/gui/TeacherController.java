@@ -1,53 +1,100 @@
 package gui;
 
-import java.io.File;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
+//import java.io.File;
 
 import javax.swing.DefaultListModel;
 
+import taskmanager.Achievement;
+import taskmanager.Categories;
+import taskmanager.Days;
+import taskmanager.FileReaderHandler;
+import taskmanager.Levels;
 import taskmanager.Student;
 //import taskmanager.Student;
 import taskmanager.Task;
 import taskmanager.Teacher;
 
-public class TeacherController implements Controller{
-	String username; 
+public class TeacherController implements Controller {
+	String username;
 	Teacher currentTeacher;
-	
+	Student currentStudent;
+
 	public TeacherController(String name) {
 		this.username = name;
-		//TODO: fix this file part
-		File userFile = new File("./parentTeacherUsers.txt");
 		this.currentTeacher = new Teacher(name);
-	}
-	@Override
-	public DefaultListModel<Task> getToDoTasks() {
-		// TODO Auto-generated method stub
-		return null;
+		// TODO: login teacher method???
+		try {
+			this.currentStudent = currentTeacher.getAllStudents().firstElement();
+		} catch (Exception e) {
+			this.currentStudent = new Student("temp student");
+		}
+
 	}
 
 	@Override
-	public DefaultListModel<Task> getInProgressTasks() {
-		// TODO Auto-generated method stub
-		return null;
+	public Task addTask(String name, List<String> list) {
+		Task task = new Task(name);
+		currentTeacher.assignTask(task, list);
+		return task;
 	}
 
-	@Override
-	public DefaultListModel<Task> getDoneTasks() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public Task addTask(String name) {
-		return null;
-		// TODO Auto-generated method stub
-		
-	}
 	@Override
 	public Student getStudent() {
-		// TODO Auto-generated method stub
-		return null;
+		return currentStudent;
 	}
 
+	@Override
+	public DefaultListModel<Student> getStudents() {
+		return currentTeacher.getAllStudents();
+	}
+
+	@Override
+	public List<DefaultListModel<Task>> getCategoryTasks() {
+		List<DefaultListModel<Task>> tasks = new ArrayList<>();
+		for (Categories category : Categories.values()) {
+			DefaultListModel<Task> taskColumn = currentStudent.getTasksByCategory(category);
+			tasks.add(taskColumn);
+		}
+		return tasks;
+	}
+
+	@Override
+	public List<DefaultListModel<Task>> getDayTasks() {
+		List<DefaultListModel<Task>> tasks = new ArrayList<>();
+		for (Days day : Days.values()) {
+			DefaultListModel<Task> taskColumn = currentStudent.getTasksByDay(day);
+			tasks.add(taskColumn);
+		}
+		return tasks;
+	}
+
+	@Override
+	public void setStudent(Student student) {
+		this.currentStudent = student;
+	}
+
+	@Override
+	public List<String> processInput(String listOfNames) {
+		return currentTeacher.processInput(listOfNames);
+	}
+
+	@Override
+	public void addStudent(String name) {
+		this.currentTeacher.addStudent(name);
+	}
+
+	@Override
+	public Levels getStudentLevel() {
+		return currentStudent.calculateLevel();
+	}
 	
+	@Override
+	public DefaultListModel<Achievement> getStudentAchievements() {
+		return currentStudent.checkAcheivements();
+	}
 
 }
